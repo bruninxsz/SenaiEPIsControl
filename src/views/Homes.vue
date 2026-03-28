@@ -5,11 +5,11 @@
     <div id="Header" class="flex justify-between p-6 shadow-md bg-white">
         <img src="../assets/logo.png" alt="Logo Senai Epi Control" class="w-40 hover:scale-105"> <!--LOGO-->
 
-        <router-link to='#Funcionalidades'>
+        <router-link to='/#Funcionalidades'>
             <div class="px-2 py-4 text-black hover:text-red-600 hover:scale-[1.02]">Funcionalidades</div> <!--SOBRE-->
         </router-link>
 
-        <router-link to='#Beneficios'>
+        <router-link to='/#Beneficios'>
             <div class="px-2 py-4 text-black hover:text-red-600 hover:scale-[1.02]">Benefícios</div> <!--CONTATO-->
         </router-link>
 
@@ -30,7 +30,7 @@
         <div class="flex flex-col space-y-5 text-right">
             <h1 class="text-5xl text-right font-medium">Sistema de Controle de EPIs <br> para Instituições de Ensino</h1>
 
-            <p class="text-gray-600 text-xl text-right"> Gerencie entregas, validade e rastreabilidade de equipamentos
+            <p id="Funcionalidades" class="text-gray-600 text-xl text-right"> Gerencie entregas, validade e rastreabilidade de equipamentos
                 de proteção
                 individual de forma simples e eficiente</p><br>
 
@@ -48,8 +48,6 @@
     </div>
 
 
-    <section class="Funcionalidades">
-
     <div class="flex justify-between space-x-20 mx-auto text-center max-w-7xl items-center mt-32"> <!--CARDS-->
 
         <div class="mx-auto max-w-6xl p-10">
@@ -57,8 +55,7 @@
             <div class="flex flex-col space-y-5 items-center">
                 <div><img src="../assets/Home/safety.svg" alt="Capacete de segurança" class="w-32 h-auto"></div>
                 <div class="text-red-600 text-xl font-bold">Controle de Entregas</div>
-                <p class="text-gray-600 text-xl max-w-sm">Controle de Entregas e rastreamento de equipamentos de
-                    proteção individual de forma simples e eficiente.</p>
+                <p class="text-gray-600 text-xl max-w-sm">Controle e rastreie a entrega de EPIs em tempo real, com total visibilidade e organização.</p>
 
             </div>
         </div>
@@ -68,8 +65,7 @@
             <div class="flex flex-col space-y-5 items-center">
                 <div><img src="../assets/Home/validade.svg" alt="Calendário com validação" class="w-[110px] h-auto"></div>
                 <div class="text-red-600 text-xl font-bold">Gestão de Validade</div>
-                <p class="text-gray-600 text-xl max-w-sm">Gestão de validade de equipamentos de proteção individual de
-                    forma simples e eficiente.</p>
+                <p class="text-gray-600 text-xl max-w-sm">Acompanhe a validade dos EPIs e evite riscos com alertas automáticos de vencimento.</p>
 
             </div>
         </div>
@@ -79,18 +75,14 @@
             <div class="flex flex-col space-y-5 items-center">
                 <div><img src="../assets/Home/rastreability.svg" alt="Corrente e lupa" class="w-[110px] h-auto"></div>
                 <div class="text-red-600 text-xl font-bold">Rastreabilidade Completa</div>
-                <p class="text-gray-600 text-xl max-w-sm">Rastreabilidade completa de equipamentos de proteção
-                    individual de forma simples e eficiente.</p>
+                <p class="text-gray-600 text-xl max-w-sm">Tenha acesso ao histórico completo de cada EPI: quem recebeu, quando e em qual condição.</p>
 
             </div>
         </div>
     </div> <!--CARDS-->
 
-    </section>
 
-    <section class="Beneficios">
-
-    <div class="flex flex-col py-10 space-y-20 text-center mt-32"> <!--Seção porque escolher a EPI Control-->
+    <div id="Beneficios" class="flex flex-col py-10 space-y-20 text-center mt-[210px]"> <!--Seção porque escolher a EPI Control-->
 
         <p class="text-black text-4xl font-medium">Por que escolher o Senai Epi Control?</p>
         <p class="text-gray-700 text-xl max-w-6xl mx-auto">O Senai Epi Control é uma solução completa desenvolvida especialmente para instituições de ensino técnico e profissionalizante, voltada à modernização do controle de EPIs. A plataforma oferece gerenciamento centralizado, acompanhamento em tempo real do estoque, controle de validade e relatórios estratégicos, promovendo mais segurança, organização e eficiência administrativa.</p>
@@ -98,7 +90,7 @@
     </div>
 
 
-    <div class="flex justify-between space-x-10 max-w-7xl mx-auto mt-32"> <!--Segunda seção de cards-->
+    <div class="flex justify-between space-x-10 max-w-7xl mx-auto mt-[218px]"> <!--Segunda seção de cards-->
 
         <div class="flex flex-col space-y-6 p-10 shadow-xl rounded-xl w-[900px] hover:scale-[1.01]">
 
@@ -133,8 +125,6 @@
         </div>
 
     </div>
-
-    </section>
 
 
     <div class="mt-[300px]">  <!--Chamada para o componente Footer-->
