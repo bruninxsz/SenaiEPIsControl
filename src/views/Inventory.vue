@@ -1,14 +1,21 @@
 <template>
+<div class="bg-gray-100">
+    
     <header>
         <Header />
     </header>
-    <div class="title">
-        <h1>pagina Inventory</h1>
-    </div>
+
     <div class="menu">
         <Menu />
     </div>
+
+    <div class="">
+        <Footer/>
+    </div>
+
+</div>
 </template>
+
 
 <script>
 import Header from "../components/Header.vue"

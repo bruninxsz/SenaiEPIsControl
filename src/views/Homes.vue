@@ -2,8 +2,8 @@
 
     <div class="bg-gray-100 min-h-screen">
     <!--Montando o Header-->
-    <div id="Header" class="flex justify-between px-6 py-6 shadow-md bg-white">
-        <img src="../assets/logo.png" alt="Logo Senai Epi Control" class="w-40 rounded-md hover:scale-105"> <!--LOGO-->
+    <div id="Header" class="flex justify-between p-6 shadow-md bg-white">
+        <img src="../assets/logo.png" alt="Logo Senai Epi Control" class="w-40 hover:scale-105"> <!--LOGO-->
 
         <router-link to='#Funcionalidades'>
             <div class="px-2 py-4 text-black hover:text-red-600 hover:scale-[1.02]">Funcionalidades</div> <!--SOBRE-->
@@ -14,7 +14,7 @@
         </router-link>
 
         <router-link to='Login'>
-            <button class="bg-red-700 px-12 py-4 text-white rounded-md hover:bg-red-800 hover:scale-[1.01]">
+            <button class="bg-red-700 px-10 py-3 text-white rounded-md hover:bg-red-800 hover:scale-[1.01]">
                 <!--BOTÃO LOGIN-->
                 Login
             </button>
@@ -23,7 +23,7 @@
 
 
 
-
+    
     <!--Montando o Corpo da Página-->
     <div class="flex justify-between items-center max-w-7xl mx-auto px-4 mt-32">
 
@@ -48,6 +48,7 @@
     </div>
 
 
+    <section class="Funcionalidades">
 
     <div class="flex justify-between space-x-20 mx-auto text-center max-w-7xl items-center mt-32"> <!--CARDS-->
 
@@ -85,6 +86,9 @@
         </div>
     </div> <!--CARDS-->
 
+    </section>
+
+    <section class="Beneficios">
 
     <div class="flex flex-col py-10 space-y-20 text-center mt-32"> <!--Seção porque escolher a EPI Control-->
 
@@ -129,10 +133,11 @@
         </div>
 
     </div>
-    
+
+    </section>
 
 
-    <div class="mt-32">  <!--Chamada para o componente Footer-->
+    <div class="mt-[300px]">  <!--Chamada para o componente Footer-->
         <Footer/>
     </div>
     

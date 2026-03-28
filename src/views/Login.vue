@@ -9,13 +9,26 @@
     </div>
 
     <div class="flex flex-col bg-gray-300 p-10 shadow-xl max-w-4xl mx-auto rounded-xl mt-32">
+
         <div class="text-black font-medium text-center text-2xl">Faça seu Login</div>
-        <div class="py-3 px-2 shadow-md bg-white max-w-5xl mx-auto rounded-xl mt-4 text-gray-300 text-md font-medium mt-16">
-            Digite o seu CPF:⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</div>
-        <div class="py-3 px-2 shadow-md bg-white max-w-5xl mx-auto rounded-xl mt-4 text-gray-300 text-md font-medium mt-8">
-            Digite a sua senha:⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ </div>
-        <button class="bg-red-700 px-12 py-4 text-white max-w-xl mx-auto font-bold rounded-md mt-12 hover:bg-red-800 hover:scale-[1.01]">Login</button>
-        <div class="text-right text-blue-600 text-md mt-8 mr-3">Esqueceu sua senha?</div>
+
+        <div class="flex items-center mx-auto mt-16">
+            <p>Digite o seu CPF:</p>
+            <input type="cpf" id="cpf" class="ml-5 py-3 px-6 shadow-md bg-white max-w-5xl rounded-xl text-black text-md"></input>
+        </div>
+
+        <div class="flex items-center mx-auto mt-8">
+            <p>Digite a sua senha:</p>
+            <input type="password" id="senha" class="ml-2 py-3 px-6 shadow-md bg-white max-w-5xl rounded-xl text-black text-md"></input>
+        </div>
+        
+        <router-link to="/Inventory" class="max-w-xl mx-auto">
+            <button type="submit" class="bg-red-700 px-10 py-3 text-white font-bold rounded-md mt-16 hover:bg-red-800 hover:scale-[1.01]">Login</button>
+        </router-link>      
+
+        <router-link to="/Login">
+            <div class="text-right text-blue-600 text-md mt-8 mr-3 hover:underline">Esqueceu sua senha?</div>
+        </router-link>
         
 
     </div>
