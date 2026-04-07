@@ -13,13 +13,13 @@
         <div class="text-black font-medium text-center text-2xl">Faça seu Login</div>
 
         <div class="flex items-center mx-auto mt-16">
-            <p>Digite o seu CPF:</p>
-            <input type="cpf" id="cpf" class="ml-5 py-3 px-6 shadow-md bg-white max-w-5xl rounded-xl text-black text-md"></input>
+            <p>Digite o seu email:</p>
+            <input type="email" id="email" v-model="email" class="ml-3 py-3 px-8 shadow-md bg-white max-w-5xl rounded-xl text-black text-md"></input>
         </div>
 
         <div class="flex items-center mx-auto mt-8">
             <p>Digite a sua senha:</p>
-            <input type="password" id="senha" class="ml-2 py-3 px-6 shadow-md bg-white max-w-5xl rounded-xl text-black text-md"></input>
+            <input type="password" id="senha" v-model="senha" class="ml-3 py-3 px-8 shadow-md bg-white max-w-5xl rounded-xl text-black text-md"></input>
         </div>
         
         <router-link to="/Inventory" class="max-w-xl mx-auto">
@@ -48,4 +48,5 @@ export default {
         Footer
     }
 }
+
 </script>
