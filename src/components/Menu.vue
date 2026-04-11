@@ -1,6 +1,6 @@
-<template class>
+<template>
 
-     <div class="flex flex-col bg-gray-500 px-4 text-white max-w-[200px] min-h-screen">
+     <aside class="flex flex-col bg-gray-500 px-4 text-white max-w-[200px] h-screen">
 
         <router-link to="/Activities" class="mt-6">Página Activities</router-link>
 
@@ -11,7 +11,7 @@
         <router-link to="/Users" class="mt-8">Página Users</router-link>
 
         <router-link to="/" class="my-8">Sair da Conta</router-link>
-    </div>
+     </aside>
 
 
 </template>

@@ -5,11 +5,13 @@
         <Header />
     </header>
 
-    <div class="menu">
+    <div class="flex">
         <Menu />
     </div>
 
-    <div class="">
+    <div class="flex-1">
+            
+    
         <Footer/>
     </div>
 

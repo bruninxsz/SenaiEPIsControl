@@ -1,4 +1,4 @@
-<template class="">
+<template class="flex">
   <div class="flex justify-between bg-white p-6 shadow-md">
     <img src="../assets/logo.png" class="w-40 hover:scale-105">
 
