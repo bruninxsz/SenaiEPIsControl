@@ -8,6 +8,7 @@ import Activities from '../views/Activities.vue';
 import EPIRegister from '../views/EPIRegister.vue'; 
 import Inventory from '../views/Inventory.vue'; 
 import Users from '../views/Users.vue'; 
+import Cadastro from '../views/Cadastro.vue'
 
 
 //Definindo as rotas
@@ -40,7 +41,13 @@ const routes = [
     {
         path:'/Users',
         component: Users
+    },
+
+    {
+        path:'/Cadastro',
+        component: Cadastro
     }
+
 ]
 
 const router = createRouter({

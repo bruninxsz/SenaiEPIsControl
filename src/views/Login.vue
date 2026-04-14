@@ -46,9 +46,6 @@
 </template>
 
 <script setup>
-import Header from "../components/Header.vue"
-import Menu from "../components/Menu.vue"
-import Footer from "../components/Footer.vue"
 import { useSupabase } from '../composables/useSupabase'
 // ===== IMPORTAÇÕES =====
 // Importar a função ref do Vue para criar variáveis reativas

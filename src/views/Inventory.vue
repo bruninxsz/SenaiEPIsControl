@@ -4,18 +4,20 @@
     <header>
         <Header />
     </header>
-
-    <div class="flex">
+<div class ="flex flex-row"> <!--Justificar por linha (Flex-col - coluna e Flex-row - linha)-->
+    <div class="">
         <Menu />
     </div>
 
-    <div class="flex-1">
+    <div class="">
             
     
-        <Footer/>
+        
     </div>
-
+    </div>
+    <Footer/>
 </div>
+
 </template>
 
 
