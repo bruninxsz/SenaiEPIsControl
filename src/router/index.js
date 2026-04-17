@@ -1,67 +1,56 @@
 //importando o Vue Roter
-import {createRouter, createWebHistory} from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 
 //Importando os componentes das páginas
 import Home from '../views/Homes.vue'
-import Login from '../views/Login.vue'; 
-import Activities from '../views/Activities.vue'; 
-import EPIRegister from '../views/EPIRegister.vue'; 
-import Inventory from '../views/Inventory.vue'; 
-import Users from '../views/Users.vue'; 
+import Login from '../views/Login.vue';
+import Activities from '../views/Activities.vue';
+import EpiRegister from '../views/EPIRegister.vue';
+import Inventory from '../views/Inventory.vue';
+import Users from '../views/Users.vue';
 import Cadastro from '../views/Cadastro.vue'
+import Dashboard from '../views/Dashboard.vue'
 
 
 //Definindo as rotas
 const routes = [
     {
-        path:'/',                 // Rota para a página
+        path: '/',                 // Rota para a página
         component: Home           // Apelido para chamar depois
     },
 
     {
-        path:'/Login',
+        path: '/login', 
         component: Login
     },
 
     {
-        path:'/Activities',
-        component: Activities
-    },
-
-    {
-        path:'/EPIRegister',
-        component: EPIRegister
-    },
-
-    {
-        path:'/Inventory',
-        component: Inventory
-    },
-
-    {
-        path:'/Users',
-        component: Users
-    },
-
-    {
-        path:'/Cadastro',
-        component: Cadastro
+        path: '/dashboard',
+        component: Dashboard,
+        meta: { requiresAuth: true },
+        children: [
+            { path: 'inventory', component: Inventory },
+            { path: 'cadastro', component: Cadastro },
+            { path: 'activities', component: Activities },
+            { path: 'epiregister', component: EpiRegister },
+            { path: 'users', component: Users }
+        ]
     }
 
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes,
-  scrollBehavior(to) {
-    if (to.hash) {
-      return {
-        el: to.hash,
-        behavior: 'smooth'
-      }
+    history: createWebHistory(),
+    routes,
+    scrollBehavior(to) {
+        if (to.hash) {
+            return {
+                el: to.hash,
+                behavior: 'smooth'
+            }
+        }
+        return { top: 0 }
     }
-    return { top: 0 }
-  }
 })
 
 export default router;
