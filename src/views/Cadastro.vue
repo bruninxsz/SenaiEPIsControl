@@ -86,5 +86,36 @@ async function novoUsuario() {
 
   carregando.value = true
 
+  try{
+    const {data,error} = await supabase.auth.signUp({ 
+        email: email.value,
+        password: senha.value
+    })
+
+    if (error) {
+        erro.value = 'Erro ao criar usuário, tente novamente.'
+        return
+    }
+
+    const user = data.user
+
+    if (!user) {
+        erro.value = 'Erro ao criar usuário'
+        return
+    }
+    
+
+  } 
+  catch(err){
+
+  }
+
+  finally{
+
+  }
+
+}
+
+
   
 </script>
