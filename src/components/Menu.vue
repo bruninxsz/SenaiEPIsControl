@@ -12,7 +12,7 @@
 
         <router-link to="/Dashboard/Users" class="mt-8 hover:font-bold">Usuários</router-link>
 
-        <button to="/" class="my-8 font-medium hover:font-bold text-left">
+        <button @click="Sair" class="my-8 font-medium hover:font-bold text-left">
          
          Sair da Conta
 
@@ -21,3 +21,25 @@
 
 
 </template>
+
+<script setup>
+
+import { useRouter } from 'vue-router'
+import { useSupabase } from '../composables/useSupabase'    
+
+const { supabase } = useSupabase()
+const router = useRouter()
+
+async function Sair(){      
+
+   try{
+      await supabase.auth.signOut()    //Função do supabase para deslogar
+      router.push('/Login')
+   }
+   catch(err){
+         console.error('Erro ao fazer logout:', err)        //Validação
+   }
+}
+
+
+</script>

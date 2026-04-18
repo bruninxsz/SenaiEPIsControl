@@ -24,24 +24,24 @@
         
         <!-- Mensagem de erro -->
         <!-- v-if="erro" = só mostra a mensagem se houver um erro -->
-        <div v-if="erro" class="mensagem-erro">
+        <div v-if="erro" class="font-bold text-right text-red-500 mt-12">
           <i class="fas fa-exclamation-circle"></i>
           {{ erro }}
         </div>
 
-        <button type="submit" class="botao-entrar mx-auto bg-red-700 py-3 w-64 text-white font-bold rounded-md mt-24 hover:bg-red-800 hover:scale-[1.01]" :disabled="carregando">
+        <button type="submit" class="botao-entrar mx-auto bg-red-700 py-3 w-64 text-white font-bold rounded-md mt-16 hover:bg-red-800 hover:scale-[1.01]" :disabled="carregando">
         <!-- Mostra um spinner enquanto está carregando -->
           <i v-if="carregando" class="fas fa-spinner fa-spin"></i>
           <!-- Mostra o texto normal quando não está carregando -->
           <span v-else>Entrar</span>
         </button>
                          
-        <router-link to="/Login">
+        <!--<router-link to="/Login">
             <div class="text-right text-blue-600 text-md mt-16 mr-3 hover:underline">Esqueceu sua senha?</div>
-        </router-link>
+        </router-link>-->
         
     </form>
-</div>
+</div>  
 
 </template>
 
@@ -86,7 +86,7 @@ async function fazerLogin() {
     }
 
     // Redireciona após login
-    router.push('/Inventory')
+    router.push('/Dashboard')
   } catch (err) {
     // Erro inesperado
     erro.value = 'Erro ao fazer login. Tente novamente mais tarde.'

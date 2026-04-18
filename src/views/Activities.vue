@@ -22,9 +22,7 @@
 
 
 <script setup>
-import Header from "../components/Header.vue"
-import Menu from "../components/Menu.vue"
-import Footer from "../components/Footer.vue"
+
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSupabase } from '../composables/useSupabase'

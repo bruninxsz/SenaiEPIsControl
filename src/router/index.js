@@ -1,5 +1,8 @@
 //importando o Vue Roter
 import { createRouter, createWebHistory } from 'vue-router';
+import { useSupabase } from '../composables/useSupabase'
+
+const { supabase } = useSupabase()
 
 //Importando os componentes das páginas
 import Home from '../views/Homes.vue'
@@ -20,7 +23,7 @@ const routes = [
     },
 
     {
-        path: '/login', 
+        path: '/login',
         component: Login
     },
 
@@ -50,6 +53,19 @@ const router = createRouter({
             }
         }
         return { top: 0 }
+    }
+})
+
+router.beforeEach(async (to, from, next) => {
+    const requiresAuth = to.meta.requiresAuth
+
+    const { data } = await supabase.auth.getUser()    //Função Supabase para pegar informações do usuário logado
+    const user = data.user
+
+    if (requiresAuth && !user) {
+        next('/login') // Se o supabase reponder que 'user=null', o código redireciona para a página login
+    } else {
+        next() //  Se o supabase responder com qualquer usuário, o código direciona para a página desejada
     }
 })
 
