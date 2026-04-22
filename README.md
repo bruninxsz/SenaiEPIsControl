@@ -17,6 +17,6 @@ Projeto desenvolvido para ser um sistema completo de controle de Epis, contendo 
 - Integração com API
 
 ## ▶️ Como rodar
-git clone https://github.com/bruninxsz/SenaiEPIsControl/
+git clone https://github.com/bruninxsz/SenaiEPIControl/
 npm install
 npm run dev
