@@ -1,5 +1,22 @@
-# Vue 3 + Vite
+# SenaiEpiControl
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## 📌 Sobre
+Projeto desenvolvido para ser um sistema completo de controle de Epis, contendo funcionalidades de cadastro e login, hierarquização de classes, visualização de estatísticas, controle de equipamentos, registro de entregas e devoluções de Epis e cadastro de Epis.
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+## 🚀 Tecnologias
+- Html
+- Css
+- JavaScript
+- Vue.js
+- Supabase
+- Tailwind CSS
+
+## ⚙️ Funcionalidades
+- Autenticação de usuários
+- CRUD completo
+- Integração com API
+
+## ▶️ Como rodar
+git clone https://github.com/bruninxsz/SenaiEPIsControl/
+npm install
+npm run dev
