@@ -20,3 +20,8 @@ Projeto desenvolvido para ser um sistema completo de controle de Epis, contendo 
 git clone https://github.com/bruninxsz/SenaiEPIControl/
 npm install
 npm run dev
+
+## 🔗 Deploy
+https://senai-epi-control.vercel.app/
+
+Projeto em desenvolvimento...
