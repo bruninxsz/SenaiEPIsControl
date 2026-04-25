@@ -2,7 +2,7 @@
 
     <div class="bg-gray-100 min-h-screen">
     <!--Montando o Header-->
-    <div id="Header" class="sticky top-0 flex justify-between p-6 shadow-md bg-white">
+    <div id="Header" class="sticky top-0 flex justify-between p-6 shadow-md bg-white z-50">
         <img src="../assets/logo.png" alt="Logo Senai Epi Control" class="w-40 hover:scale-105"> <!--LOGO-->
 
         <router-link to='/#Funcionalidades'>

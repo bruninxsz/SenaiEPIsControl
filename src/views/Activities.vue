@@ -15,7 +15,7 @@
 
             </div>
         </div>
-       
+
     </div>
 
 </template>
@@ -28,4 +28,3 @@ import { useRouter } from 'vue-router'
 import { useSupabase } from '../composables/useSupabase'
 
 </script>
-
