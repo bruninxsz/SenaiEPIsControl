@@ -8,9 +8,13 @@
 
         <router-link to="/Dashboard/Activities" class="mt-6 hover:font-bold">Movimentações</router-link>
 
-        <router-link to="/Dashboard/EPIRegister" class="mt-8 hover:font-bold">Realizar entrega</router-link>
+        <router-link to="/Dashboard/EPIRegister" class="mt-8 hover:font-bold">Cadastrar EPI</router-link>
 
         <router-link to="/Dashboard/Users" class="mt-8 hover:font-bold">Usuários</router-link>
+
+        <router-link to="/Dashboard/EPIRegister" class="mt-8 hover:font-bold">Registrar Entrega</router-link>
+
+        <router-link to="/Dashboard/Users" class="mt-8 hover:font-bold">Registrar Devolução</router-link>
 
         <button @click="Sair" class="my-8 font-medium hover:font-bold text-left">
          

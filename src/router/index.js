@@ -13,6 +13,8 @@ import Inventory from '../views/Inventory.vue';
 import Users from '../views/Users.vue';
 import Cadastro from '../views/Cadastro.vue'
 import Dashboard from '../views/Dashboard.vue'
+import Entrega from '../views/Entrega.vue'
+import Devolucao from '../views/Devolucao.vue'
 
 
 //Definindo as rotas
@@ -36,7 +38,9 @@ const routes = [
             { path: 'cadastro', component: Cadastro },
             { path: 'activities', component: Activities },
             { path: 'epiregister', component: EpiRegister },
-            { path: 'users', component: Users }
+            { path: 'users', component: Users },
+            { path: 'entrega', component: Entrega },
+            { path: 'devolucao', component: Devolucao }
         ]
     }
 

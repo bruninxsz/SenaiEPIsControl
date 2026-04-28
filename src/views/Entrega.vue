@@ -4,7 +4,7 @@
         <div class="flex flex-row gap-[25%]"> <!--Justificar por linha (Flex-col - coluna e Flex-row - linha)-->
 
             <div class="">
-
+           
             </div>
 
             <div class="mt-6">
@@ -12,70 +12,31 @@
                 <form @submit.prevent="novoUsuario"
                     class="flex flex-col bg-gray-300 p-10 shadow-xl max-w-3xl mx-auto rounded-xl mt-32">
 
-                    <div class="text-black font-medium text-center text-2xl">Cadastrar EPI</div>
+                    <div class="text-black font-medium text-center text-2xl">Novo Usuário</div>
 
-                    <div class="flex items-center mx-auto mt-8">
-                        <label for="classe">Tipo do EPI:</label>
-                        <select id="classe" v-model="tipoEpi"
-                            class="ml-3 px-4 py-3 shadow-md bg-white w-96 text-black text-md">
-
-                            <option value="Capacete">Capacete</option>
-                            <option value="OculosSeguranca">Óculos de Segurança</option>
-                            <option value="OculosSolda">Óculos de Solda</option>
-                            <option value="ProtetorFacial">Protetor Facial</option>
-                            <option value="MascaraSolda">Máscara de Solda</option>
-                            <option value="RespiradorDescartavel">Respirador Descartável (PFF2)</option>
-                            <option value="RespiradorCartucho">Respirador com Cartucho</option>
-                            <option value="ProtetorAuricularPlug">Protetor Auricular (Plug)</option>
-                            <option value="ProtetorAuricularConcha">Protetor Auricular (Concha)</option>
-                            <option value="LuvaRaspa">Luva de Raspa</option>
-                            <option value="LuvaLatex">Luva de Látex</option>
-                            <option value="LuvaNitrilica">Luva Nitrílica</option>
-                            <option value="LuvaIsolante">Luva Isolante (Elétrica)</option>
-                            <option value="AventalRaspa">Avental de Raspa</option>
-                            <option value="AventalPVC">Avental de PVC</option>
-                            <option value="PerneiraRaspa">Perneira de Raspa</option>
-                            <option value="Mangote">Mangote de Proteção</option>
-                            <option value="Bota">Bota Bico de Aço</option>
-                            <option value="BotaPVC">Bota de PVC</option>
-                            <option value="SapatoSeguranca">Sapato de Segurança</option>
-                            <option value="CintoSeguranca">Cinto de Segurança (Tipo Paraquedista)</option>
-                            <option value="Talabarte">Talabarte</option>
-                            <option value="TravaQuedas">Trava-Quedas</option>
-                            <option value="ColeteRefletivo">Colete Refletivo</option>
-                            <option value="CapuzSolda">Capuz para Solda</option>
-                            <option value="BlusaoProtecao">Blusão de Proteção</option>
-                            <option value="CalcaProtecao">Calça de Proteção</option>
-
-                        </select>
+                    <div class="flex items-center mx-auto mt-16">
+                        <label for="email">Digite o email:</label>
+                        <input type="email" id="email" v-model="email"
+                            class="ml-3 px-4 py-3 shadow-md bg-white w-96 rounded-xl text-black text-md"></input>
                     </div>
 
                     <div class="flex items-center mx-auto mt-8">
-                        <label for="classe">Quantidade:</label>
+                        <label for="senha">Digite a senha:</label>
+                        <input id="senha" v-model="senha"
+                            class="ml-3 px-4 py-3 shadow-md bg-white w-96 rounded-xl text-black text-md"></input>
+                    </div>
+
+                    <div class="flex items-center mx-auto mt-8">
+                        <label for="classe">Classe usuário:</label>
                         <select id="classe" v-model="classe"
                             class="ml-3 px-4 py-3 shadow-md bg-white w-96 text-black text-md">
 
                             <option value="" disabled>Selecione uma opção</option>
-                            <option value="1">1</option>
-                            <option value="1">2</option>
-                            <option value="1">3</option>
-                            <option value="1">4</option>
-                            <option value="1">5</option>
-                            <option value="1">6</option>
-                            <option value="1">7</option>
-                            <option value="1">8</option>
-                            <option value="1">9</option>
-                            <option value="1">10</option>                           
+                            <option value="Administrador">Administrador</option>
+                            <option value="Funcionario">Funcionário</option>
+                            <option value="Aluno">Aluno</option>
 
                         </select>
-                    </div>
-
-                    <div class="flex items-center mx-auto mt-8">
-                        <label for="classe">Vencimento:</label>
-                        <input type="date"
-                            class="ml-3 px-4 py-3 shadow-md bg-white w-96 text-black text-md">
-
-                    </input>
                     </div>
 
                     <!-- Mensagem de erro -->
@@ -94,7 +55,7 @@
 
             </div>
         </div>
-
+     
     </div>
 
 </template>
@@ -113,7 +74,7 @@ const classe = ref('')
 const erro = ref('')
 const carregando = ref(false)
 
-async function novoEpi() {
+async function novoUsuario() {
     erro.value = ''
 
     // Validação básica (Vendo se todos os campos foram preenchidos)
@@ -134,7 +95,7 @@ async function novoEpi() {
             console.error('Erro do Supabase:', error)
             erro.value = `Error: ${error.message}`
             return                                      //Erro na requisição
-        }
+        }   
 
         const user = data.user              //Pegando os dados retornados pelo supabase
 
