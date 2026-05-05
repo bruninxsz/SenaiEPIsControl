@@ -39,13 +39,6 @@
                         </select>
                     </div>
 
-                    <!-- Mensagem de erro -->
-                    <!-- v-if="erro" = só mostra a mensagem se houver um erro -->
-                    <div v-if="erro" class="mensagem-erro mt-12 text-red-600 font-bold">
-                        <i class="fas fa-exclamation-circle"></i>
-                        {{ erro }}
-                    </div>
-
                     <button type="submit"
                         class="botao-cadastro mx-auto bg-red-700 py-3 w-64 text-white font-bold rounded-md mt-24 hover:bg-red-800 hover:scale-[1.01]"
                         :disabled="carregando">Cadastrar</button>
@@ -64,6 +57,8 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSupabase } from '../composables/useSupabase'
+import { useToast } from "vue-toastification" //notificação da biblioteca do Vue
+
 
 const { supabase } = useSupabase()
 const router = useRouter()
@@ -73,13 +68,15 @@ const senha = ref('')
 const classe = ref('')
 const erro = ref('')
 const carregando = ref(false)
+const toast = useToast( )
 
 async function novoUsuario() {
     erro.value = ''
 
     // Validação básica (Vendo se todos os campos foram preenchidos)
     if (!email.value || !senha.value || !classe.value) {
-        erro.value = 'Por favor, preencha todos os campos'
+        toast.warning('Preencha todos os campos para prosseguir!')
+
         return
     }
 
@@ -94,6 +91,7 @@ async function novoUsuario() {
         if (error) {
             console.error('Erro do Supabase:', error)
             erro.value = `Error: ${error.message}`
+            toast.error('Erro ao cadastrar usuário')
             return                                      //Erro na requisição
         }   
 
@@ -102,6 +100,7 @@ async function novoUsuario() {
         if (!user) {
             console.error('Erro do Supabase:', error)
             erro.value = `Error: ${error.message}`
+            toast.error('Erro ao cadastrar usuário')
             return
         }                                   //Verifica se o usuário foi realmente criado
 
@@ -118,10 +117,11 @@ async function novoUsuario() {
         if (erroInsert) {
             console.error('Erro do Supabase:', error)
             erro.value = `Error: ${error.message}`
+            toast.error('Erro ao cadastrar usuário')
             return                                          //erro no insert
         }
 
-        alert('Usuário cadastrado com sucesso!')
+        toast.success('Usuário Cadastrado com sucesso')
 
         email.value = ''         //Limpando os dados para próximos cadastros
         senha.value = ''
@@ -132,6 +132,7 @@ async function novoUsuario() {
     catch (err) {
         erro.value = 'Erro inesperado'   //Captura erros inesperados
         console.error(err)
+        toast.error('Erro ao cadastrar usuário')
     }
 
     finally {

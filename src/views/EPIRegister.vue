@@ -9,14 +9,14 @@
 
             <div class="mt-6">
 
-                <form @submit.prevent="novoUsuario"
+                <form @submit.prevent="cadastrarEpi"
                     class="flex flex-col bg-gray-300 p-10 shadow-xl max-w-3xl mx-auto rounded-xl mt-32">
 
                     <div class="text-black font-medium text-center text-2xl">Cadastrar EPI</div>
 
                     <div class="flex items-center mx-auto mt-8">
-                        <label for="classe">Tipo do EPI:</label>
-                        <select id="classe" v-model="tipoEpi"
+                        <label for="tipo">Tipo do EPI:</label>
+                        <select id="tipo" v-model="tipo"
                             class="ml-3 px-4 py-3 shadow-md bg-white w-96 text-black text-md">
 
                             <option value="Capacete">Capacete</option>
@@ -51,39 +51,33 @@
                     </div>
 
                     <div class="flex items-center mx-auto mt-8">
-                        <label for="classe">Quantidade:</label>
-                        <select id="classe" v-model="classe"
+                        <label for="quantidade">Quantidade:</label>
+                        <select id="quantidade" v-model="quantidade"
                             class="ml-3 px-4 py-3 shadow-md bg-white w-96 text-black text-md">
 
                             <option value="" disabled>Selecione uma opção</option>
                             <option value="1">1</option>
-                            <option value="1">2</option>
-                            <option value="1">3</option>
-                            <option value="1">4</option>
-                            <option value="1">5</option>
-                            <option value="1">6</option>
-                            <option value="1">7</option>
-                            <option value="1">8</option>
-                            <option value="1">9</option>
-                            <option value="1">10</option>                           
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>                           
 
                         </select>
                     </div>
 
                     <div class="flex items-center mx-auto mt-8">
-                        <label for="classe">Vencimento:</label>
-                        <input type="date"
+                        <label for="vencimento">Vencimento:</label>
+                        <input type="date" v-model="vencimento"
                             class="ml-3 px-4 py-3 shadow-md bg-white w-96 text-black text-md">
 
                     </input>
                     </div>
 
-                    <!-- Mensagem de erro -->
-                    <!-- v-if="erro" = só mostra a mensagem se houver um erro -->
-                    <div v-if="erro" class="mensagem-erro mt-12 text-red-600 font-bold">
-                        <i class="fas fa-exclamation-circle"></i>
-                        {{ erro }}
-                    </div>
 
                     <button type="submit"
                         class="botao-cadastro mx-auto bg-red-700 py-3 w-64 text-white font-bold rounded-md mt-24 hover:bg-red-800 hover:scale-[1.01]"
@@ -103,81 +97,62 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSupabase } from '../composables/useSupabase'
+import { useToast } from "vue-toastification" //notificação da biblioteca do Vue
+
 
 const { supabase } = useSupabase()
 const router = useRouter()
 
-const email = ref('')
-const senha = ref('')
-const classe = ref('')
+const tipo = ref('')
+const quantidade = ref('')
+const vencimento = ref('')
+
 const erro = ref('')
 const carregando = ref(false)
+const toast = useToast( )
 
-async function novoEpi() {
+async function cadastrarEpi() {
     erro.value = ''
 
-    // Validação básica (Vendo se todos os campos foram preenchidos)
-    if (!email.value || !senha.value || !classe.value) {
-        erro.value = 'Por favor, preencha todos os campos'
+    if (!tipo.value || !quantidade.value || !vencimento.value) {
+        toast.warning('Preencha todos os campos para prosseguir!')
         return
     }
 
     carregando.value = true
 
     try {
-        const { data, error } = await supabase.auth.signUp({
-            email: email.value,
-            password: senha.value                       //Recolhendo os dados digitados no formulário e enviando ao Auth do supabase
-        })
+        const epi = []         //Uso de arrays para inserir vários epis de uma só vez
+
+        for (let i = 0; i < Number(quantidade.value); i++) {        //repete o insert enquanto i for menor que a quantidade inserida
+            epi.push({
+                tipo_epi: tipo.value,
+                vencimento: vencimento.value
+            })
+        }
+
+        const { error } = await supabase
+            .from('epi')
+            .insert(epi)
 
         if (error) {
-            console.error('Erro do Supabase:', error)
-            erro.value = `Error: ${error.message}`
-            return                                      //Erro na requisição
-        }
-
-        const user = data.user              //Pegando os dados retornados pelo supabase
-
-        if (!user) {
-            console.error('Erro do Supabase:', error)
-            erro.value = `Error: ${error.message}`
+            console.error(error)
+            toast.error('Erro ao cadastrar EPI')
             return
-        }                                   //Verifica se o usuário foi realmente criado
-
-        const { error: erroInsert } = await supabase  //Inserindo os dados na tabela usuarios
-            .from('usuarios')
-            .insert([
-                {
-                    id: user.id,
-                    email: email.value,
-                    classe: classe.value
-                }
-            ])
-
-        if (erroInsert) {
-            console.error('Erro do Supabase:', error)
-            erro.value = `Error: ${error.message}`
-            return                                          //erro no insert
         }
 
-        alert('Usuário cadastrado com sucesso!')
+        toast.success('EPIs cadastrados com sucesso!')
 
-        email.value = ''         //Limpando os dados para próximos cadastros
-        senha.value = ''
-        classe.value = ''
-        erro.value = ''
+        tipo.value = ''
+        quantidade.value = ''
+        vencimento.value = ''
 
-    }
-    catch (err) {
-        erro.value = 'Erro inesperado'   //Captura erros inesperados
+    } catch (err) {
         console.error(err)
+        toast.error('Erro inesperado')
+    } finally {
+        carregando.value = false
     }
-
-    finally {
-        carregando.value = false        //Depois de dar certo ou errado, libera o uso do botão
-    }
-
-
 }
 
 
