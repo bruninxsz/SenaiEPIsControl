@@ -13,7 +13,7 @@
             </thead>
 
             <tbody class="bg-gray-200">
-                <tr v-for="tipo_epi in epi" :key="tipo_epi.id" class="hover:bg-gray-100">
+                <tr v-for="epi in epi" :key="epi.id" class="hover:bg-gray-100">
 
                     <td class="p-2 text-center">{{ epi.id}}</td>
                     <td class="p-2 text-center">{{ epi.tipo_epi}}</td>
@@ -36,6 +36,7 @@ import { useRouter } from 'vue-router'
 import { useSupabase } from '../composables/useSupabase'
 const { supabase } = useSupabase()
 import { ref, onMounted } from 'vue'  //onMounted é utilizado para exibir os resultados assim que a página carregar
+import { useToast } from "vue-toastification" //notificação da biblioteca do Vue
 
 const epi = ref([])
 const erro = ref('')
@@ -58,6 +59,8 @@ async function exibirEstoque() {
 onMounted(() => {
     exibirEstoque()
 })
+
+
 
 
 
