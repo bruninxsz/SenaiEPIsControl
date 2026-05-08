@@ -8,17 +8,23 @@
                     <th class="p-2">Id Epi</th>
                     <th class="p-2">Tipo Epi</th>
                     <th class="p-2">Vencimento</th>
-                    <th class="p-2">Vencimento</th>
+                    <th class="p-2">Status</th>
+                    <th class="p-2">Deletar</th>
                 </tr>
             </thead>
 
             <tbody class="bg-gray-200">
-                <tr v-for="epi in epi" :key="epi.id" class="hover:bg-gray-100">
+                <tr v-for="tipo_epi in epi" :key="tipo_epi.id" class="hover:bg-gray-100 items text-center">
 
-                    <td class="p-2 text-center">{{ epi.id}}</td>
-                    <td class="p-2 text-center">{{ epi.tipo_epi}}</td>
-                    <td class="p-2 text-center">{{ epi.vencimento}}</td>
-                    <td class="p-2 text-center">{{ epi.status}}</td>
+                    <td class="p-2 text-center">{{ tipo_epi.id_epi}}</td>
+                    <td class="p-2 text-center">{{ tipo_epi.tipo_epi}}</td>
+                    <td class="p-2 text-center">{{ tipo_epi.vencimento}}</td>
+                    <td class="p-2 text-center">{{ tipo_epi.status}}</td>
+                    <td class="p-2">
+                        <button @click="deletarEpi(tipo_epi.id_epi)">
+                            <img src="../assets/Users/lixo.png" class="py-2 w-[3vh] mx-auto">
+                        </button>
+                    </td>
 
                 </tr>
             </tbody>
@@ -40,6 +46,8 @@ import { useToast } from "vue-toastification" //notificação da biblioteca do V
 
 const epi = ref([])
 const erro = ref('')
+const carregando = ref(false)
+const toast = useToast()
 
 async function exibirEstoque() {
 
@@ -53,7 +61,30 @@ async function exibirEstoque() {
         console.log(`Error ${erro}`)            //Verificar se tem erro e exibir o erro no console
     }
 
-    epi.value = data     //Se não deu erro, usuários recebe a resposta do supabase
+    epi.value = data   //Se não deu erro, epi recebe a resposta do supabase
+    console.log(data)
+}
+
+async function deletarEpi(id) {
+
+    if (!confirm("Tem certeza que deseja deletar este Epi?")) return
+
+    carregando.value = true
+
+    const { error } = await supabase        //Contato com o supabase
+        .from('epi')
+        .delete()
+        .eq('id_epi', id)
+
+    if (error) {
+        toast.error("Erro ao deletar Epi")
+
+    } else {
+        toast.success("Epi deletado com sucesso!")
+        exibirEstoque()        // recarrega a tabela
+    }
+
+    carregando.value = false
 }
 
 onMounted(() => {

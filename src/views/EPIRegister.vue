@@ -106,6 +106,7 @@ const router = useRouter()
 const tipo = ref('')
 const quantidade = ref('')
 const vencimento = ref('')
+const status = ref('Disponível')
 
 const erro = ref('')
 const carregando = ref(false)
@@ -127,7 +128,8 @@ async function cadastrarEpi() {
         for (let i = 0; i < Number(quantidade.value); i++) {        //repete o insert enquanto i for menor que a quantidade inserida
             epi.push({
                 tipo_epi: tipo.value,
-                vencimento: vencimento.value
+                vencimento: vencimento.value,
+                status: status.value
             })
         }
 
@@ -146,12 +148,14 @@ async function cadastrarEpi() {
         tipo.value = ''
         quantidade.value = ''
         vencimento.value = ''
+        status.value = ''
 
     } catch (err) {
         console.error(err)
         toast.error('Erro inesperado')
     } finally {
         carregando.value = false
+        router.push('/Dashboard/Inventory') //Redireciona para a página de estoque após o cadastro
     }
 }
 

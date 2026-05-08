@@ -48,7 +48,7 @@
                         <label for="email" class="text-white">Digite o email:</label>
                         <input type="email" id="email" v-model="email"
                             class="ml-3 px-4 py-3 shadow-md bg-white w-96 rounded-xl text-black text-md"></input>
-                    </div>
+                    </div>  
 
                     <div class="flex items-center mx-auto mt-8">
                         <label for="classe" class="text-white">Classe usuário:</label>
