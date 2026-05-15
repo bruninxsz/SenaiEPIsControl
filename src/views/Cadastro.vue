@@ -4,17 +4,23 @@
         <div class="flex flex-row gap-[25%]"> <!--Justificar por linha (Flex-col - coluna e Flex-row - linha)-->
 
             <div class="">
-           
+
             </div>
 
             <div class="mt-6">
 
                 <form @submit.prevent="novoUsuario"
-                    class="flex flex-col bg-gray-300 p-10 shadow-xl max-w-3xl mx-auto rounded-xl mt-32">
+                    class="flex flex-col bg-gray-300 p-10 shadow-xl max-w-3xl mx-auto rounded-xl mt-24">
 
                     <div class="text-black font-medium text-center text-2xl">Novo Usuário</div>
 
                     <div class="flex items-center mx-auto mt-16">
+                        <label for="email">Digite seu nome:</label>
+                        <input id="nome" v-model="nome"
+                            class="ml-3 px-4 py-3 shadow-md bg-white w-96 rounded-xl text-black text-md"></input>
+                    </div>
+
+                    <div class="flex items-center mx-auto mt-8">
                         <label for="email">Digite seu email:</label>
                         <input type="email" id="email" v-model="email"
                             class="ml-3 px-4 py-3 shadow-md bg-white w-96 rounded-xl text-black text-md"></input>
@@ -54,7 +60,7 @@
 
             </div>
         </div>
-     
+
     </div>
 
 </template>
@@ -69,19 +75,21 @@ import { useToast } from "vue-toastification" //notificação da biblioteca do V
 const { supabase } = useSupabase()
 const router = useRouter()
 
+const nome = ref('')
 const email = ref('')
+const number = ref('')
 const senha = ref('')
 const classe = ref('')
 const confSenha = ref('')
 const erro = ref('')
 const carregando = ref(false)
-const toast = useToast( )
+const toast = useToast()
 
 async function novoUsuario() {
     erro.value = ''
 
     // Validação básica (Vendo se todos os campos foram preenchidos)
-    if (!email.value || !senha.value || !confSenha.value || !classe.value) {
+    if (!nome.value || !email.value || !senha.value || !confSenha.value || !classe.value) {
         toast.warning('Preencha todos os campos para prosseguir!')
 
         return
@@ -91,9 +99,9 @@ async function novoUsuario() {
 
     try {
 
-        if (senha.value !== confSenha.value){
+        if (senha.value !== confSenha.value) {
             toast.warning('As senhas não coincidem!')
-            return
+            return                                      //Verificando se as senhas digitadas são iguais     
         }
 
         const { data, error } = await supabase.auth.signUp({
@@ -106,7 +114,7 @@ async function novoUsuario() {
             erro.value = `Error: ${error.message}`
             toast.error('Erro ao cadastrar usuário')
             return                                      //Erro na requisição
-        }   
+        }
 
         const user = data.user              //Pegando os dados retornados pelo supabase
 
@@ -123,7 +131,9 @@ async function novoUsuario() {
                 {
                     id: user.id,
                     email: email.value,
-                    classe: classe.value
+                    classe: classe.value,
+                    nome_usuario: nome.value
+
                 }
             ])
 
@@ -136,8 +146,10 @@ async function novoUsuario() {
 
         toast.success('Usuário Cadastrado com sucesso')
 
+        nome.value = ''          //Limpando os dados para próximos cadastros
         email.value = ''         //Limpando os dados para próximos cadastros
         senha.value = ''
+        confSenha.value = ''
         classe.value = ''
         erro.value = ''
 
