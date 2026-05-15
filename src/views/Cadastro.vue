@@ -10,12 +10,12 @@
             <div class="mt-6">
 
                 <form @submit.prevent="novoUsuario"
-                    class="flex flex-col bg-gray-300 p-10 shadow-xl max-w-3xl mx-auto rounded-xl mt-24">
+                    class="flex flex-col bg-gray-300 p-10 shadow-xl max-w-3xl mx-auto rounded-xl mt-16">
 
                     <div class="text-black font-medium text-center text-2xl">Novo Usuário</div>
 
                     <div class="flex items-center mx-auto mt-16">
-                        <label for="email">Digite seu nome:</label>
+                        <label for="nome">Digite seu nome:</label>
                         <input id="nome" v-model="nome"
                             class="ml-3 px-4 py-3 shadow-md bg-white w-96 rounded-xl text-black text-md"></input>
                     </div>
