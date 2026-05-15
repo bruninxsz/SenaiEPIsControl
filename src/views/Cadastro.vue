@@ -15,19 +15,25 @@
                     <div class="text-black font-medium text-center text-2xl">Novo Usuário</div>
 
                     <div class="flex items-center mx-auto mt-16">
-                        <label for="email">Digite o email:</label>
+                        <label for="email">Digite seu email:</label>
                         <input type="email" id="email" v-model="email"
                             class="ml-3 px-4 py-3 shadow-md bg-white w-96 rounded-xl text-black text-md"></input>
                     </div>
 
                     <div class="flex items-center mx-auto mt-8">
-                        <label for="senha">Digite a senha:</label>
-                        <input id="senha" v-model="senha"
+                        <label for="senha">Digite sua senha:</label>
+                        <input type="password" v-model="senha"
                             class="ml-3 px-4 py-3 shadow-md bg-white w-96 rounded-xl text-black text-md"></input>
                     </div>
 
                     <div class="flex items-center mx-auto mt-8">
-                        <label for="classe">Classe usuário:</label>
+                        <label for="confSenha">Confirmar senha:</label>
+                        <input type="password" v-model="confSenha"
+                            class="ml-3 px-4 py-3 shadow-md bg-white w-96 rounded-xl text-black text-md"></input>
+                    </div>
+
+                    <div class="flex items-center mx-auto mt-8">
+                        <label for="classe">Classe do usuário:</label>
                         <select id="classe" v-model="classe"
                             class="ml-3 px-4 py-3 shadow-md bg-white w-96 text-black text-md">
 
@@ -66,6 +72,7 @@ const router = useRouter()
 const email = ref('')
 const senha = ref('')
 const classe = ref('')
+const confSenha = ref('')
 const erro = ref('')
 const carregando = ref(false)
 const toast = useToast( )
@@ -74,7 +81,7 @@ async function novoUsuario() {
     erro.value = ''
 
     // Validação básica (Vendo se todos os campos foram preenchidos)
-    if (!email.value || !senha.value || !classe.value) {
+    if (!email.value || !senha.value || !confSenha.value || !classe.value) {
         toast.warning('Preencha todos os campos para prosseguir!')
 
         return
@@ -83,6 +90,12 @@ async function novoUsuario() {
     carregando.value = true
 
     try {
+
+        if (senha.value !== confSenha.value){
+            toast.warning('As senhas não coincidem!')
+            return
+        }
+
         const { data, error } = await supabase.auth.signUp({
             email: email.value,
             password: senha.value                       //Recolhendo os dados digitados no formulário e enviando ao Auth do supabase
