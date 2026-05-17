@@ -6,9 +6,9 @@
 
         <router-link v-if="isAdmin" to="/Dashboard/Cadastro" class="mt-8 hover:font-bold">Cadastro</router-link>
 
-        <router-link to="/Dashboard/Activities" class="mt-6 hover:font-bold">Movimentações</router-link>
+        <router-link v-if="isFuncionario || isAdmin" to="/Dashboard/Activities" class="mt-6 hover:font-bold">Movimentações</router-link>
 
-        <router-link to="/Dashboard/EPIRegister" class="mt-8 hover:font-bold">Cadastrar EPI</router-link>
+        <router-link v-if="isAdmin" to="/Dashboard/EPIRegister" class="mt-8 hover:font-bold">Cadastrar EPI</router-link>
 
         <router-link to="/Dashboard/Users" class="mt-8 hover:font-bold">Usuários</router-link>
 

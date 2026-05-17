@@ -70,6 +70,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSupabase } from '../composables/useSupabase'
 import { useToast } from "vue-toastification" //notificação da biblioteca do Vue
+import { data } from 'autoprefixer'
 
 
 const { supabase } = useSupabase()
@@ -104,9 +105,16 @@ async function novoUsuario() {
             return                                      //Verificando se as senhas digitadas são iguais     
         }
 
-        const { data, error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({         //Recolhendo os dados digitados no formulário e enviando ao Auth do supabase
             email: email.value,
-            password: senha.value                       //Recolhendo os dados digitados no formulário e enviando ao Auth do supabase
+            password: senha.value,                                          
+            options:{
+                data: { 
+                    nome_usuario: nome.value,         //Colocando o nome do usuário no auth para facilitar a criação de Policy
+                    classe: classe.value                    //Colocando a classe na no auth para facilitar a criação de Policy
+                }
+            }          
+            
         })
 
         if (error) {
@@ -125,26 +133,7 @@ async function novoUsuario() {
             return
         }                                   //Verifica se o usuário foi realmente criado
 
-        const { error: erroInsert } = await supabase  //Inserindo os dados na tabela usuarios
-            .from('usuarios')
-            .insert([
-                {
-                    id: user.id,
-                    email: email.value,
-                    classe: classe.value,
-                    nome_usuario: nome.value
-
-                }
-            ])
-
-        if (erroInsert) {
-            console.error('Erro do Supabase:', error)
-            erro.value = `Error: ${error.message}`
-            toast.error('Erro ao cadastrar usuário')
-            return                                          //erro no insert
-        }
-
-        toast.success('Usuário Cadastrado com sucesso')
+        toast.success('Usuário cadastrado com sucesso')
 
         nome.value = ''          //Limpando os dados para próximos cadastros
         email.value = ''         //Limpando os dados para próximos cadastros

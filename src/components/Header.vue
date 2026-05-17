@@ -3,7 +3,7 @@
       <img src="../assets/logo.png" class="w-40 hover:scale-105">
 
       <div class="flex items-center">
-        <p v-if="user">{{ user.nome }}</p>
+        <p v-if="user">{{ user.nome_usuario }}</p>
         <img src="../assets/Header/Profile.svg" class="w-[50px] ml-3">
       </div>
 
