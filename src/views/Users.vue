@@ -37,42 +37,43 @@
 
         <!--Exibir modal para atualizar informações dos usuários-->
 
-         <div v-if="showCadastroModal" class="modal-overlay" @click.stop>
+        <div v-if="showCadastroModal" class="modal-overlay" @click.stop>
 
-            <div class="fixed inset-0 max-h-[550px] my-auto flex flex-col bg-black/40 backdrop-blur-xl p-10 shadow-xl max-w-3xl mx-auto rounded-xl z-50">
-    
-                    <button class="text-red-600 font-bold text-right text-4xl" @click="showCadastroModal = false">X</button>
-                    <div class="text-white font-medium text-center text-2xl">Atualizar Usuário</div>
+            <div
+                class="fixed inset-0 max-h-[550px] my-auto flex flex-col bg-black/40 backdrop-blur-xl p-10 shadow-xl max-w-3xl mx-auto rounded-xl z-50">
 
-                    <div class="flex items-center mx-auto mt-16">
-                        <label for="email" class="text-white">Digite o email:</label>
-                        <input type="email" id="email" v-model="email"
-                            class="ml-3 px-4 py-3 shadow-md bg-white w-96 rounded-xl text-black text-md"></input>
-                    </div>  
+                <button class="text-red-600 font-bold text-right text-4xl" @click="showCadastroModal = false">X</button>
+                <div class="text-white font-medium text-center text-2xl">Atualizar Usuário</div>
 
-                    <div class="flex items-center mx-auto mt-8">
-                        <label for="classe" class="text-white">Classe usuário:</label>
-                        <select id="classe" v-model="classe"
-                            class="ml-3 px-4 py-3 shadow-md bg-white w-96 text-black text-md">
-
-                            <option value="" disabled>Selecione uma opção</option>
-                            <option value="Administrador">Administrador</option>
-                            <option value="Funcionario">Funcionário</option>
-                            <option value="Aluno">Aluno</option>
-
-                        </select>
-                    </div>
-
-                    <button type="submit" @click="atualizarUsuario()"
-                        class="botao-cadastro mx-auto bg-red-700 py-3 w-64 text-white font-bold rounded-md mt-16 hover:bg-red-800 hover:scale-[1.01]"
-                        :disabled="carregando">Atualizar</button>
+                <div class="flex items-center mx-auto mt-16">
+                    <label for="email" class="text-white">Digite o email:</label>
+                    <input type="email" id="email" v-model="email"
+                        class="ml-3 px-4 py-3 shadow-md bg-white w-96 rounded-xl text-black text-md"></input>
                 </div>
 
+                <div class="flex items-center mx-auto mt-8">
+                    <label for="classe" class="text-white">Classe usuário:</label>
+                    <select id="classe" v-model="classe"
+                        class="ml-3 px-4 py-3 shadow-md bg-white w-96 text-black text-md">
+
+                        <option value="" disabled>Selecione uma opção</option>
+                        <option value="Administrador">Administrador</option>
+                        <option value="Funcionario">Funcionário</option>
+                        <option value="Aluno">Aluno</option>
+
+                    </select>
+                </div>
+
+                <button type="submit" @click="atualizarUsuario()"
+                    class="botao-cadastro mx-auto bg-red-700 py-3 w-64 text-white font-bold rounded-md mt-16 hover:bg-red-800 hover:scale-[1.01]"
+                    :disabled="carregando">Atualizar</button>
+            </div>
 
 
 
 
-    </div>
+
+        </div>
     </div>
 </template>
 
@@ -88,7 +89,7 @@ import { useToast } from "vue-toastification" //notificação da biblioteca do V
 
 const usuarios = ref([])
 const erro = ref('')
-    
+
 const editandoUsuario = ref(false)
 const showCadastroModal = ref(false)
 const usuarioSelecionado = ref(null)
@@ -121,17 +122,17 @@ function abrirModal(user) {
     showCadastroModal.value = true
 }
 
-async function atualizarUsuario() { 
+async function atualizarUsuario() {
     if (!usuarioSelecionado.value) return       //Tratamento de erro
 
-    if(!email.value || !classe.value){
+    if (!email.value || !classe.value) {
         toast.warning('Preencha todos os campos para prosseguir')
         return
     }
 
 
 
-    carregando.value = true        
+    carregando.value = true
 
     const { error } = await supabase        //Contato com o supabase
         .from('usuarios')
@@ -152,11 +153,11 @@ async function atualizarUsuario() {
     carregando.value = false
 }
 
-async function deletarUsuario(id) { 
+async function deletarUsuario(id) {
 
     if (!confirm("Tem certeza que deseja deletar este usuário?")) return
 
-    carregando.value = true        
+    carregando.value = true
 
     const { error } = await supabase        //Contato com o supabase
         .from('usuarios')
