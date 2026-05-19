@@ -65,7 +65,7 @@
                             <option value="7">7</option>
                             <option value="8">8</option>
                             <option value="9">9</option>
-                            <option value="10">10</option>                           
+                            <option value="10">10</option>
 
                         </select>
                     </div>
@@ -75,7 +75,7 @@
                         <input type="date" v-model="vencimento"
                             class="ml-3 px-4 py-3 shadow-md bg-white w-96 text-black text-md">
 
-                    </input>
+                        </input>
                     </div>
 
 
@@ -107,10 +107,11 @@ const tipo = ref('')
 const quantidade = ref('')
 const vencimento = ref('')
 const status = ref('Disponível')
+const venc = new Date(vencimento.value)
 
 const erro = ref('')
 const carregando = ref(false)
-const toast = useToast( )
+const toast = useToast()
 
 async function cadastrarEpi() {
     erro.value = ''
@@ -123,6 +124,19 @@ async function cadastrarEpi() {
     carregando.value = true
 
     try {
+
+        const hoje = new Date()
+        hoje.setHours(0, 0, 0, 0)
+
+        const venc = new Date(vencimento.value)
+        venc.setHours(0, 0, 0, 0)
+
+        if (venc <= hoje) {
+            toast.error('A data de vencimento deve ser maior que a data atual!')
+            carregando.value = false
+            return
+        }
+        
         const epi = []         //Uso de arrays para inserir vários epis de uma só vez
 
         for (let i = 0; i < Number(quantidade.value); i++) {        //repete o insert enquanto i for menor que a quantidade inserida
@@ -132,6 +146,8 @@ async function cadastrarEpi() {
                 status: status.value
             })
         }
+
+
 
         const { error } = await supabase
             .from('epi')
@@ -151,16 +167,18 @@ async function cadastrarEpi() {
     } catch (err) {
         console.error(err)
         toast.error('Erro inesperado')
+        return
+
     } finally {
         carregando.value = false
         router.push('/Dashboard/Inventory') //Redireciona para a página de estoque após o cadastro
     }
 
-     if(!error){
-        toast.success('Entrega cadastrada com sucesso!')  
+    if (!error) {
+        toast.success('Entrega cadastrada com sucesso!')
     }
 }
-    
+
 
 
 </script>
