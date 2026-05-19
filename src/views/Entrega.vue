@@ -14,19 +14,19 @@
 
                     <div class="text-black font-medium text-center text-2xl">Registrar Entrega</div>
 
-                    <div class="flex items-center mx-auto mt-16">
+                    <div class="flex justify-between items-center mt-16">
                         <label for="epi">Digite o ID do Epi:</label>
-                        <input type="text" id="epi" v-model="epi"
+                        <input type="number" id="epi" v-model="epi"
                             class="ml-3 px-4 py-3 shadow-md bg-white w-96 rounded-xl text-black text-md"></input>
                     </div>
 
-                    <div class="flex items-center mx-auto mt-8">
+                    <div class="flex justify-between items-center mt-8">
                         <label for="email">Email do recebedor:</label>
-                        <input id="email" v-model="email"
+                        <input type="email" id="email" v-model="email"
                             class="ml-3 px-4 py-3 shadow-md bg-white w-96 rounded-xl text-black text-md"></input>
                     </div>
 
-                    <div class="flex items-center mx-auto mt-8">
+                    <div class="flex justify-between items-center mt-8">
                         <label for="classe">Assinaturas:</label>
                         <select id="classe" v-model="assinaturas"
                             class="ml-3 px-4 py-3 shadow-md bg-white w-96 text-black text-md">
@@ -38,7 +38,7 @@
                         </select>
                     </div>
 
-                    <div class="flex items-center mx-auto mt-8">
+                    <div class="flex justify-between items-center mt-8">
                         <label for="observacoes">Digite suas observações:</label>
                         <input type="text" id="observacoes" v-model="observacoes"
                             class="ml-3 px-4 py-3 shadow-md bg-white w-96 rounded-xl text-black text-md"></input>
@@ -98,8 +98,21 @@ async function realizarEntrega() {
             .single()
 
     
-        if (usuarioError || !usuarios) {         //Verificando se o usuário existe
+        if (usuarioError || !usuarios) {             //Verificando se o usuário existe
             console.log('Erro ao buscar usuário:', usuarioError)   //Exibe uma notificação de erro usando a biblioteca de toast   
+            return
+        }
+
+        const {data: epiData, error:epiError} = await supabase
+            .from('epi')
+            .select('id_epi')
+            .eq('id_epi', Number(epi.value))
+            .maybeSingle()
+
+        if(!epiData){
+            toast.error('EPI não encontrado')
+            console.log('Erro ao buscar EPI: ', epiError)
+            return
         }
     
 
@@ -109,7 +122,7 @@ async function realizarEntrega() {
             .insert([                                   //insert tradicional
 
                 {
-                    id_epi: epi.value,
+                    epi_id: epi.value,
                     emprestado_por_id: usuarios.id,
                     assinaturas: assinaturas.value,
                     observacoes: observacoes.value,
@@ -127,8 +140,11 @@ async function realizarEntrega() {
         epi.value = ''         //Limpando os dados para próximos cadastros
         assinaturas.value = ''
         observacoes.value = ''
-        usuarios.value = ''
         erro.value = ''
+
+        if(!error){
+        toast.success('Entrega cadastrada com sucesso!')  
+    }   
 
     }
     catch (err) {
@@ -138,8 +154,7 @@ async function realizarEntrega() {
     }
 
     finally {
-        carregando.value = false   
-        toast.success('Entrega cadastrada com sucesso!')     //Depois de dar certo ou errado, libera o uso do botão
+        carregando.value = false      //Depois de dar certo ou errado, libera o uso do botão
     }
 
 

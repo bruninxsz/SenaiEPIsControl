@@ -14,7 +14,7 @@
 
                     <div class="text-black font-medium text-center text-2xl">Cadastrar EPI</div>
 
-                    <div class="flex items-center mx-auto mt-8">
+                    <div class="flex justify-between items-center mt-8">
                         <label for="tipo">Tipo do EPI:</label>
                         <select id="tipo" v-model="tipo"
                             class="ml-3 px-4 py-3 shadow-md bg-white w-96 text-black text-md">
@@ -50,7 +50,7 @@
                         </select>
                     </div>
 
-                    <div class="flex items-center mx-auto mt-8">
+                    <div class="flex justify-between items-center mt-8">
                         <label for="quantidade">Quantidade:</label>
                         <select id="quantidade" v-model="quantidade"
                             class="ml-3 px-4 py-3 shadow-md bg-white w-96 text-black text-md">
@@ -70,7 +70,7 @@
                         </select>
                     </div>
 
-                    <div class="flex items-center mx-auto mt-8">
+                    <div class="flex justify-between items-center mt-8">
                         <label for="vencimento">Vencimento:</label>
                         <input type="date" v-model="vencimento"
                             class="ml-3 px-4 py-3 shadow-md bg-white w-96 text-black text-md">
@@ -143,8 +143,6 @@ async function cadastrarEpi() {
             return
         }
 
-        toast.success('EPIs cadastrados com sucesso!')
-
         tipo.value = ''
         quantidade.value = ''
         vencimento.value = ''
@@ -157,8 +155,12 @@ async function cadastrarEpi() {
         carregando.value = false
         router.push('/Dashboard/Inventory') //Redireciona para a página de estoque após o cadastro
     }
-}
 
+     if(!error){
+        toast.success('Entrega cadastrada com sucesso!')  
+    }
+}
+    
 
 
 </script>

@@ -4,7 +4,8 @@
     <!--Montando o Header-->
     <div id="Header" class="sticky top-0 flex justify-between p-6 shadow-md bg-white z-50">
         <img src="../assets/logo.png" alt="Logo Senai Epi Control" class="w-40 hover:scale-105"> <!--LOGO-->
-
+    
+    <div class="flex justify-between gap-16">
         <router-link to='/#Funcionalidades'>
             <div class="px-2 py-4 text-black hover:text-red-600 hover:scale-[1.02]">Funcionalidades</div> <!--SOBRE-->
         </router-link>
@@ -19,6 +20,7 @@
                 Login
             </button>
         </router-link>
+    </div>
     </div>
 
 

@@ -10,41 +10,42 @@
             <div class="mt-6">
 
                 <form @submit.prevent="novoUsuario"
-                    class="flex flex-col bg-gray-300 p-10 shadow-xl max-w-3xl mx-auto rounded-xl mt-16">
+                    class="flex flex-col bg-gray-300 py-10 px-16 shadow-xl max-w-3xl mx-auto rounded-xl mt-16">
 
                     <div class="text-black font-medium text-center text-2xl">Novo Usuário</div>
 
-                    <div class="flex items-center mx-auto mt-16">
-                        <label for="nome">Digite seu nome:</label>
+                    <div class="flex justify-between items-center mt-16">
+                        <label for="nome">Digite o nome:</label>
                         <input id="nome" v-model="nome"
                             class="ml-3 px-4 py-3 shadow-md bg-white w-96 rounded-xl text-black text-md"></input>
                     </div>
 
-                    <div class="flex items-center mx-auto mt-8">
-                        <label for="email">Digite seu email:</label>
+                    <div class="flex justify-between items-center mt-8">
+                        <label for="email">Digite o email:</label>
                         <input type="email" id="email" v-model="email"
                             class="ml-3 px-4 py-3 shadow-md bg-white w-96 rounded-xl text-black text-md"></input>
                     </div>
 
-                    <div class="flex items-center mx-auto mt-8">
-                        <label for="senha">Digite sua senha:</label>
+                    <div class="flex justify-between items-center mt-8">
+                        <label for="senha">Digite a senha:</label>
                         <input type="password" v-model="senha"
                             class="ml-3 px-4 py-3 shadow-md bg-white w-96 rounded-xl text-black text-md"></input>
                     </div>
 
-                    <div class="flex items-center mx-auto mt-8">
-                        <label for="confSenha">Confirmar senha:</label>
+                    <div class="flex justify-between items-center mt-8">
+                        <label for="confSenha">Confirme a senha:</label>
                         <input type="password" v-model="confSenha"
                             class="ml-3 px-4 py-3 shadow-md bg-white w-96 rounded-xl text-black text-md"></input>
                     </div>
 
-                    <div class="flex items-center mx-auto mt-8">
+                    <div class="flex justify-between items-center mt-8">
                         <label for="classe">Classe do usuário:</label>
                         <select id="classe" v-model="classe"
                             class="ml-3 px-4 py-3 shadow-md bg-white w-96 text-black text-md">
 
                             <option value="" disabled>Selecione uma opção</option>
                             <option value="Administrador">Administrador</option>
+                            <option value="Almoxarife">Almoxarife</option>
                             <option value="Funcionario">Funcionário</option>
                             <option value="Aluno">Aluno</option>
 

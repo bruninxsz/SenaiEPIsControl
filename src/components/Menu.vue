@@ -6,15 +6,15 @@
 
         <router-link v-if="isAdmin" to="/Dashboard/Cadastro" class="mt-8 hover:font-bold">Cadastro</router-link>
 
-        <router-link v-if="isFuncionario || isAdmin" to="/Dashboard/Activities" class="mt-6 hover:font-bold">Movimentações</router-link>
+        <router-link to="/Dashboard/Activities" class="mt-6 hover:font-bold">Movimentações</router-link>
 
-        <router-link v-if="isAdmin" to="/Dashboard/EPIRegister" class="mt-8 hover:font-bold">Cadastrar EPI</router-link>
+        <router-link v-if="isAdmin || isAlmoxarife" to="/Dashboard/EPIRegister" class="mt-8 hover:font-bold">Cadastrar EPI</router-link>
 
-        <router-link to="/Dashboard/Users" class="mt-8 hover:font-bold">Usuários</router-link>
+        <router-link v-if="isAdmin" to="/Dashboard/Users" class="mt-8 hover:font-bold">Usuários</router-link>
 
-        <router-link to="/Dashboard/Entrega" class="mt-8 hover:font-bold">Registrar Entrega</router-link>
+        <router-link v-if="isAdmin || isAlmoxarife" to="/Dashboard/Entrega" class="mt-8 hover:font-bold">Registrar Entrega</router-link>
 
-        <router-link to="/Dashboard/Devolucao" class="mt-8 hover:font-bold">Registrar Devolução</router-link>
+        <router-link v-if="isAdmin || isAlmoxarife" to="/Dashboard/Devolucao" class="mt-8 hover:font-bold">Registrar Devolução</router-link>
 
         <button @click="Sair" class="my-8 font-medium hover:font-bold text-left">
          
@@ -37,6 +37,7 @@ const router = useRouter()
 const user = ref(null)
 
 const isAdmin = computed(() => user.value?.classe === 'Administrador')
+const isAlmoxarife = computed(() => user.value?.clase === 'Almoxarife')
 const isFuncionario = computed(() => user.value?.classe === 'Funcionario')
 const isAluno = computed(() => user.value?.classe === 'Aluno')
 

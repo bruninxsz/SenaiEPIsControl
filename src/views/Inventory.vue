@@ -9,7 +9,7 @@
                     <th class="p-2">Tipo Epi</th>
                     <th class="p-2">Vencimento</th>
                     <th class="p-2">Status</th>
-                    <th class="p-2">Deletar</th>
+                    <th v-if="isAdmin || isAlmoxarife" class="p-2">Deletar</th>
                 </tr>
             </thead>
 
@@ -20,7 +20,7 @@
                     <td class="p-2 text-center">{{ tipo_epi.tipo_epi}}</td>
                     <td class="p-2 text-center">{{ tipo_epi.vencimento}}</td>
                     <td class="p-2 text-center">{{ tipo_epi.status}}</td>
-                    <td class="p-2">
+                    <td v-if="isAdmin || isAlmoxarife" class="p-2">
                         <button @click="deletarEpi(tipo_epi.id_epi)">
                             <img src="../assets/Users/lixo.png" class="py-2 w-[3vh] mx-auto">
                         </button>
@@ -41,13 +41,19 @@
 import { useRouter } from 'vue-router'
 import { useSupabase } from '../composables/useSupabase'
 const { supabase } = useSupabase()
-import { ref, onMounted } from 'vue'  //onMounted é utilizado para exibir os resultados assim que a página carregar
+import { ref, onMounted, computed } from 'vue'  //onMounted é utilizado para exibir os resultados assim que a página carregar
 import { useToast } from "vue-toastification" //notificação da biblioteca do Vue
 
+const router = useRouter()
 const epi = ref([])
 const erro = ref('')
 const carregando = ref(false)
 const toast = useToast()
+const user = ref('')
+const isAdmin = computed(() => user.value?.classe === 'Administrador')
+const isAlmoxarife = computed(() => user.value?.classe === 'Almoxarife')
+const isFuncionario = computed(() => user.value?.classe === 'Funcionario')
+const isAluno = computed(() => user.value?.classe === 'Aluno')
 
 async function exibirEstoque() {
 
@@ -64,6 +70,34 @@ async function exibirEstoque() {
     epi.value = data   //Se não deu erro, epi recebe a resposta do supabase
     console.log(data)
 }
+
+async function controleClasses(){
+
+    const { data:authData} = await supabase.auth.getUser()
+    
+    if(!authData?.user){
+      router.push('/Login')
+      return
+    }
+
+    const userId = authData.user.id
+
+    const {data: userData, error} = await supabase
+      .from('usuarios')
+      .select('classe')
+      .eq('id', userId)
+      .single()
+
+      
+
+      if(error){
+         console.error('Erro ao buscar dados do usuário:', error)
+         return
+      }
+
+      user.value = userData
+}
+
 
 async function deletarEpi(id) {
 
@@ -89,6 +123,7 @@ async function deletarEpi(id) {
 
 onMounted(() => {
     exibirEstoque()
+    controleClasses()
 })
 
 
