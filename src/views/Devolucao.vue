@@ -124,11 +124,26 @@ async function realizarDevolucao() {
             return                                 
         }   
 
+        if(!error){
+        toast.success('Entrega cadastrada com sucesso!')  
+        
+        const {error: updateError} = await supabase
+        .from('epi')
+        .update({status: 'Disponível'})
+        .eq('id_epi', Number(epi.value))
+
+        
+
+        if(updateError){
+            console.log('Erro ao atualizar status do Epi', updateError)
+        }
+
         epi.value = ''         //Limpando os dados para próximos cadastros
         assinaturas.value = ''
         observacoes.value = ''
-        usuarios.value = ''
         erro.value = ''
+
+    }   
 
     }
     catch (err) {

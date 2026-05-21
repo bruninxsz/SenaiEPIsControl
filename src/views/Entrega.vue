@@ -4,7 +4,7 @@
         <div class="flex flex-row gap-[25%]"> <!--Justificar por linha (Flex-col - coluna e Flex-row - linha)-->
 
             <div class="">
-           
+
             </div>
 
             <div class="mt-6">
@@ -55,7 +55,7 @@
 
             </div>
         </div>
-     
+
     </div>
 
 </template>
@@ -73,9 +73,9 @@ const epi = ref('')
 const assinaturas = ref('')
 const observacoes = ref('')
 const email = ref('')
-const emprestado_por_id = ref('')
 const erro = ref('')
 const carregando = ref(false)
+const epiId = ref('')
 const toast = useToast()
 
 async function realizarEntrega() {
@@ -87,64 +87,99 @@ async function realizarEntrega() {
         return
     }
 
+
+
     carregando.value = true
 
     try {
 
-        const {data: usuarios, error: usuarioError} = await supabase       //Selecionando o usuário que receberá a Epi    
-            .from('usuarios')                                                //Usando o email, para pegar o id do usuário
-            .select('id')   
-            .eq('email', email.value)
-            .single()
-
-    
-        if (usuarioError || !usuarios) {             //Verificando se o usuário existe
-            console.log('Erro ao buscar usuário:', usuarioError)   //Exibe uma notificação de erro usando a biblioteca de toast   
-            return
-        }
-
-        const {data: epiData, error:epiError} = await supabase
+        const { data: epiData, error: epiError } = await supabase
             .from('epi')
-            .select('id_epi')
+            .select('id_epi', 'status')
             .eq('id_epi', Number(epi.value))
             .maybeSingle()
 
-        if(!epiData){
+        if (!epiData) {
             toast.error('EPI não encontrado')
             console.log('Erro ao buscar EPI: ', epiError)
             return
         }
-    
+
+        if (epiError) {
+            toast.error('Erro ao buscar Epi')
+            console.log('Erro ao buscar Epi', epiError)
+            return
+        }
+
+        if (epiData.status == 'Vencido' || epiData.status == 'Emprestado') {
+            toast.error('Epi indisponível, por favor escolha outra!')
+            return
+        }
+
+        
+
+
+        const { data: usuario, error: erroUsuario } = await supabase
+            .from('usuarios')
+            .select('id')
+            .eq('email', email.value)
+            .single()
+
+        if (erroUsuario) {
+            toast.error('Erro ao buscar usuário')
+            console.log(erroUsuario)
+            return
+        }
+
+        if (!usuario) {
+            toast.error('Usuário não encontrado')
+            return
+        }
+
 
         const { error } = await supabase
-            
+
             .from('entregas')
             .insert([                                   //insert tradicional
 
                 {
                     epi_id: epi.value,
-                    emprestado_por_id: usuarios.id,
+                    emprestado_por_id: usuario.id,
                     assinaturas: assinaturas.value,
                     observacoes: observacoes.value,
-                    
+
                 }
             ])
+
+
 
         if (error) {
             toast.error('Ocorreu um erro ao cadastrar a entrega.') //Exibe uma notificação de erro usando a biblioteca de toast
             console.error('Erro do Supabase:', error)
             erro.value = `Error: ${error.message}`
             return                                      //Erro na requisição
-        }   
+        }
 
-        epi.value = ''         //Limpando os dados para próximos cadastros
-        assinaturas.value = ''
-        observacoes.value = ''
-        erro.value = ''
+        if (!error) {
+            toast.success('Entrega cadastrada com sucesso!')
 
-        if(!error){
-        toast.success('Entrega cadastrada com sucesso!')  
-    }   
+            const { error: updateError } = await supabase
+                .from('epi')
+                .update({ status: 'Emprestado' })
+                .eq('id_epi', Number(epi.value))
+
+
+
+            if (updateError) {
+                console.log('Erro ao atualizar status do Epi', updateError)
+            }
+
+            epi.value = ''         //Limpando os dados para próximos cadastros
+            assinaturas.value = ''
+            observacoes.value = ''
+            erro.value = ''
+
+        }
 
     }
     catch (err) {
