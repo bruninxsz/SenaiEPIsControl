@@ -9,7 +9,7 @@
 
             <div class="mt-6">
 
-                <form @submit.prevent="realizarEntrega"
+                <form @submit.prevent="realizarDevolucao"
                     class="flex flex-col bg-gray-300 p-10 shadow-xl max-w-3xl mx-auto rounded-xl mt-16">
 
                     <div class="text-black font-medium text-center text-2xl">Registrar Devolução</div>
@@ -78,7 +78,7 @@ const erro = ref('')
 const carregando = ref(false)
 const toast = useToast()
 
-async function realizarEntrega() {
+async function realizarDevolucao() {
     erro.value = ''
 
     // Validação básica (Vendo se todos os campos foram preenchidos)
@@ -105,12 +105,12 @@ async function realizarEntrega() {
 
         const { error } = await supabase
             
-            .from('entregas')
+            .from('devolucoes')
             .insert([                                   //insert tradicional
 
                 {
                     id_epi: epi.value,
-                    emprestado_por_id: usuarios.id,
+                    devolvido_por_id: usuarios.id,
                     assinaturas: assinaturas.value,
                     observacoes: observacoes.value,
                     
@@ -120,8 +120,8 @@ async function realizarEntrega() {
         if (error) {
             toast.error('Ocorreu um erro ao cadastrar a entrega.') //Exibe uma notificação de erro usando a biblioteca de toast
             console.error('Erro do Supabase:', error)
-            erro.value = `Error: ${error.message}`
-            return                                      //Erro na requisição
+            erro.value = error.message       //Erro na requisição
+            return                                 
         }   
 
         epi.value = ''         //Limpando os dados para próximos cadastros

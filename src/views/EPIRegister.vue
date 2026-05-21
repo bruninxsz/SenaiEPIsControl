@@ -10,7 +10,7 @@
             <div class="mt-6">
 
                 <form @submit.prevent="cadastrarEpi"
-                    class="flex flex-col bg-gray-300 p-10 shadow-xl max-w-3xl mx-auto rounded-xl mt-32">
+                    class="flex flex-col bg-gray-300 p-10 shadow-xl max-w-3xl mx-auto rounded-xl mt-32 ">
 
                     <div class="text-black font-medium text-center text-2xl">Cadastrar EPI</div>
 
@@ -133,7 +133,6 @@ async function cadastrarEpi() {
 
         if (venc <= hoje) {
             toast.error('A data de vencimento deve ser maior que a data atual!')
-            carregando.value = false
             return
         }
         
@@ -162,7 +161,9 @@ async function cadastrarEpi() {
         tipo.value = ''
         quantidade.value = ''
         vencimento.value = ''
-        status.value = ''
+        status.value = 'Disponível'
+        
+        router.push('/Dashboard/Inventory')
 
     } catch (err) {
         console.error(err)
@@ -171,12 +172,8 @@ async function cadastrarEpi() {
 
     } finally {
         carregando.value = false
-        router.push('/Dashboard/Inventory') //Redireciona para a página de estoque após o cadastro
     }
 
-    if (!error) {
-        toast.success('Entrega cadastrada com sucesso!')
-    }
 }
 
 
