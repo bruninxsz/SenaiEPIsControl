@@ -1,6 +1,8 @@
 <template>
     <div class="bg-gray-100">
-        <h1 class="mx-auto text-center font-bold mt-4 text-gray-600 p-16">Usuários Cadastrados</h1>
+        <h1 v-if="isAdmin || isAlmoxarife" class="mx-auto text-center font-bold mt-4 text-gray-600 p-16">Usuários Cadastrados</h1>
+        <h1 v-if="isFuncionario || isAluno" class="mx-auto text-center font-bold mt-4 text-gray-600 p-16">Seus dados</h1>
+
 
         <table class="mx-auto w-[800px] border border-gray-400 z-20">
             <thead class="bg-gray-400">
@@ -8,8 +10,8 @@
                     <th class="p-2">ID</th>
                     <th class="p-2">Email</th>
                     <th class="p-2">Classe</th>
-                    <th class="p-2">Editar Usuário</th>
-                    <th class="p-2">Deletar Usuário</th>
+                    <th v-if="isAdmin" class="p-2">Editar Usuário</th>
+                    <th v-if="isAdmin" class="p-2">Deletar Usuário</th>
                 </tr>
             </thead>
 
@@ -19,12 +21,12 @@
                     <td class="p-2">{{ user.id }}</td>
                     <td class="p-2">{{ user.email }}</td>
                     <td class="p-2">{{ user.classe }}</td>
-                    <td class="p-2">
+                    <td v-if="isAdmin" class="p-2">
                         <button @click="abrirModal(user)" class="">
                             <img src="../assets/Users/editar.png" class="p-2 w-[30%] mx-auto">
                         </button>
                     </td>
-                    <td class="p-2">
+                    <td v-if="isAdmin" class="p-2">
                         <button @click="deletarUsuario(user.id)" class="">
                             <img src="../assets/Users/lixo.png" class="p-2 w-[30%] mx-auto">
                         </button>
@@ -84,7 +86,7 @@
 import { useRouter } from 'vue-router'
 import { useSupabase } from '../composables/useSupabase'
 const { supabase } = useSupabase()
-import { ref, onMounted } from 'vue'  //onMounted é utilizado para exibir os resultados assim que a página carregar
+import { ref, onMounted, computed } from 'vue'  //onMounted é utilizado para exibir os resultados assim que a página carregar
 import { useToast } from "vue-toastification" //notificação da biblioteca do Vue
 
 const usuarios = ref([])
@@ -96,9 +98,40 @@ const usuarioSelecionado = ref(null)
 const email = ref('')
 const classe = ref('')
 const carregando = ref(false)
-
+const isAdmin = computed(() => user.value?.classe === 'Administrador')
+const isAlmoxarife = computed(() => user.value?.classe === 'Almoxarife')
+const isFuncionario = computed(() => user.value?.classe === 'Funcionario')
+const isAluno = computed(() => user.value?.classe === 'Aluno')
 const toast = useToast()
+const user = ref(null)
+const router = useRouter()
 
+async function controleClasses(){
+
+    const { data:authData} = await supabase.auth.getUser()
+    
+    if(!authData?.user){
+      router.push('/Login')
+      return
+    }
+
+    const userId = authData.user.id
+
+    const {data: userData, error} = await supabase
+      .from('usuarios')
+      .select('classe')
+      .eq('id', userId)
+      .single()
+
+      
+
+      if(error){
+         console.error('Erro ao buscar dados do usuário:', error)
+         return
+      }
+
+      user.value = userData
+}
 
 async function exibirUsuarios() {
 
@@ -185,6 +218,7 @@ function fecharModal() {
 
 onMounted(() => {
     exibirUsuarios()
+    controleClasses()
 })
 
 

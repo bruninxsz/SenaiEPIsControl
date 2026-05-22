@@ -99,7 +99,9 @@ async function realizarDevolucao() {
 
     
         if (usuarioError || !usuarios) {         //Verificando se o usuário existe
+            toast.warning('Usuário não encontrado')
             console.log('Erro ao buscar usuário:', usuarioError)   //Exibe uma notificação de erro usando a biblioteca de toast   
+            return
         }
     
 
@@ -109,7 +111,7 @@ async function realizarDevolucao() {
             .insert([                                   //insert tradicional
 
                 {
-                    id_epi: epi.value,
+                    epi_id: epi.value,
                     devolvido_por_id: usuarios.id,
                     assinaturas: assinaturas.value,
                     observacoes: observacoes.value,
@@ -124,8 +126,7 @@ async function realizarDevolucao() {
             return                                 
         }   
 
-        if(!error){
-        toast.success('Entrega cadastrada com sucesso!')  
+        
         
         const {error: updateError} = await supabase
         .from('epi')
@@ -137,6 +138,9 @@ async function realizarDevolucao() {
         if(updateError){
             console.log('Erro ao atualizar status do Epi', updateError)
         }
+
+        if(!error){
+        toast.success('Devolução registrada com sucesso!')  
 
         epi.value = ''         //Limpando os dados para próximos cadastros
         assinaturas.value = ''
@@ -154,7 +158,6 @@ async function realizarDevolucao() {
 
     finally {
         carregando.value = false   
-        toast.success('Entrega cadastrada com sucesso!')     //Depois de dar certo ou errado, libera o uso do botão
     }
 
 

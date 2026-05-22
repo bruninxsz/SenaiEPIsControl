@@ -2,6 +2,8 @@
 
      <aside class="flex flex-col bg-gray-500 px-4 text-white w-[200px] min-h-screen sticky bottom-0 top-0">
 
+        <router-link v-if="isAluno || isFuncionario" to="/Dashboard/Users" class="mt-8 hover:font-bold">Seu cadastro</router-link>
+
         <router-link to="/Dashboard/Inventory" class="mt-8 hover:font-bold">Estoque</router-link>
 
         <router-link v-if="isAdmin" to="/Dashboard/Cadastro" class="mt-8 hover:font-bold">Cadastro</router-link>
@@ -10,7 +12,10 @@
 
         <router-link v-if="isAdmin || isAlmoxarife" to="/Dashboard/EPIRegister" class="mt-8 hover:font-bold">Cadastrar EPI</router-link>
 
-        <router-link v-if="isAdmin" to="/Dashboard/Users" class="mt-8 hover:font-bold">Usuários</router-link>
+        <router-link v-if ="isAdmin || isAlmoxarife" to="/Dashboard/Users" class="mt-8 hover:font-bold">Usuários</router-link>
+
+        
+
 
         <router-link v-if="isAdmin || isAlmoxarife" to="/Dashboard/Entrega" class="mt-8 hover:font-bold">Registrar Entrega</router-link>
 
@@ -32,7 +37,7 @@ const router = useRouter()
 const user = ref(null)
 
 const isAdmin = computed(() => user.value?.classe === 'Administrador')
-const isAlmoxarife = computed(() => user.value?.clase === 'Almoxarife')
+const isAlmoxarife = computed(() => user.value?.classe === 'Almoxarife')
 const isFuncionario = computed(() => user.value?.classe === 'Funcionario')
 const isAluno = computed(() => user.value?.classe === 'Aluno')
 
