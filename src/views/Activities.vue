@@ -1,7 +1,7 @@
 <template>
     <div class="bg-gray-100">
-        <h1 v-if="isAdmin" class="mx-auto text-center font-bold text-gray-600 p-16">Movimentações</h1>
-        <h1 v-if="!isAdmin" class="mx-auto text-center font-bold text-gray-600 p-16">Suas Movimentações</h1>
+        <h1 v-if="isAdmin || isAlmoxarife" class="mx-auto text-center font-bold text-gray-600 p-16">Movimentações</h1>
+        <h1 v-else class="mx-auto text-center font-bold text-gray-600 p-16">Suas Movimentações</h1>
 
 
         <table class="mx-auto w-[600px] border border-gray-400 z-20">
@@ -74,25 +74,64 @@ async function controleClasses(){
       user.value = userData
 }
 
+
 async function exibirMovimentacoes() {
 
-    const { data, error } = await supabase
+    const{data: authData, erroAuth} = await supabase.auth.getUser()
+
+    if(erroAuth){
+        console.log(erroAuth)
+        return
+    }
+
+    const {data: user, erroUser} = await supabase
+    .from('usuarios')
+    .select('classe')
+    .eq('id', authData.user.id)
+    .single()
+
+    if(erroUser){
+        console.log(erroUser)
+        return
+    }
+
+    if(user.classe == "Aluno" || user.classe == "Funcionario"){                     //Se for aluno ou funcionário vê apenas as suas movimentações
+        const { data, error } = await supabase
         .from('movimentacoes')
         .select('*')
-        .order('data', { ascending: false })
+        .eq('usuario_id', authData.user.id)
+        .order('data', { ascending: false })    
 
+        if (error) {
+        erro.value = error.message
+        console.log(`Error ${erro}`)            //Verificar se tem erro e exibir o erro no console
+    }
 
-    if (error) {
+    movimentacoes.value = data   
+        
+    }else{                                                                            //Se for admin ou almoxarife vê todas as movimentações
+
+        const { data, error } = await supabase
+        .from('movimentacoes')
+        .select('*')
+        .order('data', { ascending: false }) 
+
+        if (error) {
         erro.value = error.message
         console.log(`Error ${erro}`)            //Verificar se tem erro e exibir o erro no console
     }
 
     movimentacoes.value = data     //Se não deu erro, usuários recebe a resposta do supabase
 }
+    }
+    
+
+
+
 
 onMounted(() => {
-    exibirMovimentacoes()
     controleClasses()
+    exibirMovimentacoes()   
 })
 
 

@@ -95,7 +95,7 @@ async function realizarEntrega() {
 
         const { data: epiData, error: epiError } = await supabase
             .from('epi')
-            .select('id_epi', 'status')
+            .select('id_epi, status')
             .eq('id_epi', Number(epi.value))
             .maybeSingle()
 
@@ -111,7 +111,7 @@ async function realizarEntrega() {
             return
         }
 
-        if (epiData.status != 'Disponível') {
+        if (epiData.status !== 'Disponível') {
             toast.error('Epi indisponível, por favor escolha outra!')
             return
         }

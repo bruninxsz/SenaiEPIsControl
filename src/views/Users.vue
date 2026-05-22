@@ -1,9 +1,23 @@
 <template>
     <div class="bg-gray-100">
-        <h1 v-if="isAdmin || isAlmoxarife" class="mx-auto text-center font-bold mt-4 text-gray-600 p-16">Usuários Cadastrados</h1>
-        <h1 v-if="isFuncionario || isAluno" class="mx-auto text-center font-bold mt-4 text-gray-600 p-16">Seus dados</h1>
+        <h1 v-if="isAdmin || isAlmoxarife" class="mx-auto text-center font-bold mt-4 text-gray-600 p-16">Usuários
+            Cadastrados</h1>
+        <h1 v-if="isFuncionario || isAluno" class="mx-auto text-center font-bold mt-4 text-gray-600 p-16">Seus dados
+        </h1>
 
+        <div class="flex flex-col">
 
+        <div v-if="isAdmin" class="flex justify-between mx-auto mb-8 gap-[550px]">
+        <select v-model="filtroClasse" @change="exibirUsuarios" class="border p-2 mb-4">
+            <option value="">Todos</option>
+            <option value="Administrador">Administrador</option>
+            <option value="Almoxarife">Almoxarife</option>
+            <option value="Aluno">Aluno</option>
+            <option value="Funcionario">Funcionário</option>
+        </select>
+
+        <button @click="limparFiltros" class="px-2 bg-red-700 rounded-lg shadow-lg text-white hover:bg-red-800">Limpar filtros</button>
+        </div>
         <table class="mx-auto w-[800px] border border-gray-400 z-20">
             <thead class="bg-gray-400">
                 <tr>
@@ -36,7 +50,8 @@
             </tbody>
 
         </table>
-
+        </div>
+ 
         <!--Exibir modal para atualizar informações dos usuários-->
 
         <div v-if="showCadastroModal" class="modal-overlay" @click.stop>
@@ -104,41 +119,47 @@ const isFuncionario = computed(() => user.value?.classe === 'Funcionario')
 const isAluno = computed(() => user.value?.classe === 'Aluno')
 const toast = useToast()
 const user = ref(null)
+const filtroClasse = ref('')
 const router = useRouter()
 
-async function controleClasses(){
+async function controleClasses() {
 
-    const { data:authData} = await supabase.auth.getUser()
-    
-    if(!authData?.user){
-      router.push('/Login')
-      return
+    const { data: authData } = await supabase.auth.getUser()
+
+    if (!authData?.user) {
+        router.push('/Login')
+        return
     }
 
     const userId = authData.user.id
 
-    const {data: userData, error} = await supabase
-      .from('usuarios')
-      .select('classe')
-      .eq('id', userId)
-      .single()
+    const { data: userData, error } = await supabase
+        .from('usuarios')
+        .select('classe')
+        .eq('id', userId)
+        .single()
 
-      
 
-      if(error){
-         console.error('Erro ao buscar dados do usuário:', error)
-         return
-      }
 
-      user.value = userData
+    if (error) {
+        console.error('Erro ao buscar dados do usuário:', error)
+        return
+    }
+
+    user.value = userData
 }
 
 async function exibirUsuarios() {
 
-    const { data, error } = await supabase
-        .from('usuarios')
-        .select('*')
+    let query = supabase
+    .from('usuarios')
+    .select('*')
 
+    if(filtroClasse.value){
+        query = query.eq('classe', filtroClasse.value)
+    }
+
+    const { data, error } = await query
 
     if (error) {
         erro.value = error.message
@@ -216,9 +237,14 @@ function fecharModal() {
     showCadastroModal.value = false
 }
 
-onMounted(() => {
+function limparFiltros() {
+    filtroClasse.value = ''
     exibirUsuarios()
+}
+
+onMounted(() => {
     controleClasses()
+    exibirUsuarios()
 })
 
 

@@ -93,7 +93,7 @@ async function realizarDevolucao() {
 
         const { data: epiData, error: epiError } = await supabase
             .from('epi')
-            .select('id_epi', 'status')
+            .select('id_epi, status')
             .eq('id_epi', Number(epi.value))
             .maybeSingle()
 
@@ -109,7 +109,7 @@ async function realizarDevolucao() {
             return
         }
 
-        if (epiData.status != 'Emprestado') {
+        if (epiData.status !== 'Emprestado') {
             toast.error('Epi não está emprestado, verifique o id do Epi')
             return
         }

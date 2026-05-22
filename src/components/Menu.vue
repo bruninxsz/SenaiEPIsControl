@@ -2,20 +2,21 @@
 
      <aside class="flex flex-col bg-gray-500 px-4 text-white w-[200px] min-h-screen sticky bottom-0 top-0">
 
-        <router-link v-if="isAluno || isFuncionario" to="/Dashboard/Users" class="mt-8 hover:font-bold">Seu cadastro</router-link>
+        <router-link v-if ="isAdmin || isAlmoxarife" to="/Dashboard/Users" class="mt-8 hover:font-bold">Usuários</router-link>
 
-        <router-link to="/Dashboard/Inventory" class="mt-8 hover:font-bold">Estoque</router-link>
+        <router-link v-else to="/Dashboard/Users" class="mt-8 hover:font-bold">Seu cadastro</router-link>
+
+        <router-link v-if="isAdmin || isAlmoxarife" to="/Dashboard/Inventory" class="mt-8 hover:font-bold">Estoque</router-link>
+
+        <router-link v-else to="/Dashboard/Inventory" class="mt-8 hover:font-bold">Epis disponíveis</router-link>
 
         <router-link v-if="isAdmin" to="/Dashboard/Cadastro" class="mt-8 hover:font-bold">Cadastro</router-link>
 
-        <router-link to="/Dashboard/Activities" class="mt-8 hover:font-bold">Movimentações</router-link>
+        <router-link v-if="isAdmin || isAlmoxarife" to="/Dashboard/Activities" class="mt-8 hover:font-bold">Movimentações</router-link>
+
+        <router-link v-else to="/Dashboard/Activities" class="mt-8 hover:font-bold">Suas movimentações</router-link>
 
         <router-link v-if="isAdmin || isAlmoxarife" to="/Dashboard/EPIRegister" class="mt-8 hover:font-bold">Cadastrar EPI</router-link>
-
-        <router-link v-if ="isAdmin || isAlmoxarife" to="/Dashboard/Users" class="mt-8 hover:font-bold">Usuários</router-link>
-
-        
-
 
         <router-link v-if="isAdmin || isAlmoxarife" to="/Dashboard/Entrega" class="mt-8 hover:font-bold">Registrar Entrega</router-link>
 
