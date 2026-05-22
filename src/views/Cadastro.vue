@@ -51,9 +51,11 @@
                         </select>
                     </div>
 
-                    <button type="submit"
+                    <button @click="submit"
                         class="botao-cadastro mx-auto bg-red-700 py-3 w-64 text-white font-bold rounded-md mt-24 hover:bg-red-800 hover:scale-[1.01]"
-                        :disabled="carregando">Cadastrar</button>
+                        :disabled="carregando">Cadastrar
+                    </button>
+
 
 
                 </form>
@@ -85,6 +87,9 @@ const confSenha = ref('')
 const erro = ref('')
 const carregando = ref(false)
 const toast = useToast()
+const mostralModal = ref(false)
+const adminEmail = ref('')
+const adminSenha = ref('')
 
 async function novoUsuario() {
     erro.value = ''
@@ -102,19 +107,28 @@ async function novoUsuario() {
 
         if (senha.value !== confSenha.value) {
             toast.warning('As senhas não coincidem!')
-            return                                      //Verificando se as senhas digitadas são iguais     
+            return                                      //Verificando se as senhas digitadas são iguais
         }
+
+        const { data: sessionData } = await supabase.auth.getSession()          //Guardando a sessão para voltar ao admin depois
+        const adminSession = sessionData.session
+
+        if (!adminSession) {
+            toast.error('Sessão do admin não encontrada')
+            return
+        }
+
 
         const { data, error } = await supabase.auth.signUp({         //Recolhendo os dados digitados no formulário e enviando ao Auth do supabase
             email: email.value,
-            password: senha.value,                                          
-            options:{
-                data: { 
+            password: senha.value,
+            options: {
+                data: {
                     nome_usuario: nome.value,         //Colocando o nome do usuário no auth para facilitar a criação de Policy
                     classe: classe.value                    //Colocando a classe na no auth para facilitar a criação de Policy
                 }
-            }          
-            
+            }
+
         })
 
         if (error) {
@@ -131,7 +145,13 @@ async function novoUsuario() {
             erro.value = `Error: ${error.message}`
             toast.error('Erro ao cadastrar usuário')
             return
-        }                                   //Verifica se o usuário foi realmente criado
+        }
+
+        await supabase.auth.setSession({
+            access_token: adminSession.access_token,                    //Volta para o usuário admin
+            refresh_token: adminSession.refresh_token
+        })
+
 
         toast.success('Usuário cadastrado com sucesso')
 
