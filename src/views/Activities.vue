@@ -79,6 +79,7 @@ async function exibirMovimentacoes() {
     const { data, error } = await supabase
         .from('movimentacoes')
         .select('*')
+        .order('data', { ascending: false })
 
 
     if (error) {

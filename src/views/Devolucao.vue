@@ -91,22 +91,45 @@ async function realizarDevolucao() {
 
     try {
 
+        const { data: epiData, error: epiError } = await supabase
+            .from('epi')
+            .select('id_epi', 'status')
+            .eq('id_epi', Number(epi.value))
+            .maybeSingle()
+
+        if (!epiData) {
+            toast.error('EPI não encontrado')
+            console.log('Erro ao buscar EPI: ', epiError)
+            return
+        }
+
+        if (epiError) {
+            toast.error('Erro ao buscar Epi')
+            console.log('Erro ao buscar Epi', epiError)
+            return
+        }
+
+        if (epiData.status != 'Emprestado') {
+            toast.error('Epi não está emprestado, verifique o id do Epi')
+            return
+        }
+
         const {data: usuarios, error: usuarioError} = await supabase       //Selecionando o usuário que receberá a Epi    
             .from('usuarios')                                                //Usando o email, para pegar o id do usuário
             .select('id')   
             .eq('email', email.value)
             .single()
 
-    
+
         if (usuarioError || !usuarios) {         //Verificando se o usuário existe
             toast.warning('Usuário não encontrado')
-            console.log('Erro ao buscar usuário:', usuarioError)   //Exibe uma notificação de erro usando a biblioteca de toast   
+            console.log('Erro ao buscar usuário:', usuarioError)   //Exibe uma notificação de erro usando a biblioteca de toast
             return
         }
-    
+
 
         const { error } = await supabase
-            
+
             .from('devolucoes')
             .insert([                                   //insert tradicional
 
@@ -115,7 +138,7 @@ async function realizarDevolucao() {
                     devolvido_por_id: usuarios.id,
                     assinaturas: assinaturas.value,
                     observacoes: observacoes.value,
-                    
+
                 }
             ])
 
@@ -123,17 +146,16 @@ async function realizarDevolucao() {
             toast.error('Ocorreu um erro ao cadastrar a entrega.') //Exibe uma notificação de erro usando a biblioteca de toast
             console.error('Erro do Supabase:', error)
             erro.value = error.message       //Erro na requisição
-            return                                 
-        }   
+            return
+        }
 
-        
-        
+
         const {error: updateError} = await supabase
         .from('epi')
         .update({status: 'Disponível'})
         .eq('id_epi', Number(epi.value))
 
-        
+
 
         if(updateError){
             console.log('Erro ao atualizar status do Epi', updateError)

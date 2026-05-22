@@ -138,6 +138,8 @@ async function cadastrarEpi() {
         
         const epi = []         //Uso de arrays para inserir vários epis de uma só vez
 
+
+
         for (let i = 0; i < Number(quantidade.value); i++) {        //repete o insert enquanto i for menor que a quantidade inserida
             epi.push({
                 tipo_epi: tipo.value,
@@ -145,6 +147,7 @@ async function cadastrarEpi() {
                 status: status.value
             })
         }
+
 
 
 

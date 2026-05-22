@@ -111,7 +111,7 @@ async function realizarEntrega() {
             return
         }
 
-        if (epiData.status == 'Vencido' || epiData.status == 'Emprestado') {
+        if (epiData.status != 'Disponível') {
             toast.error('Epi indisponível, por favor escolha outra!')
             return
         }
@@ -137,6 +137,8 @@ async function realizarEntrega() {
         }
 
 
+
+        
         const { error } = await supabase
 
             .from('entregas')
