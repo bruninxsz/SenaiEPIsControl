@@ -1,13 +1,12 @@
 <template>
     <div class="bg-gray-100">
-        <h1 v-if="isAdmin || isAlmoxarife" class="mx-auto text-center font-bold mt-4 text-gray-600 p-16">Usuários
-            Cadastrados</h1>
+        <h1 v-if="isAdmin || isAlmoxarife" class="mx-auto text-center font-bold mt-4 text-gray-600 p-16">Usuários Cadastrados</h1>
 
         <div class="flex flex-col">
 
         <div v-if="isAdmin" class="flex justify-between mx-auto mb-8 gap-[550px]">
         <select v-model="filtroClasse" @change="exibirUsuarios" class="border p-2 mb-4">
-            <option value="">Todos</option>
+            <option value="">Classe:</option>
             <option value="Administrador">Administrador</option>
             <option value="Almoxarife">Almoxarife</option>
             <option value="Aluno">Aluno</option>

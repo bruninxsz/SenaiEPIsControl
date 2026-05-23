@@ -3,34 +3,50 @@
         <h1 v-if="isAdmin || isAlmoxarife" class="mx-auto text-center font-bold text-gray-600 p-16">Movimentações</h1>
         <h1 v-else class="mx-auto text-center font-bold text-gray-600 p-16">Suas Movimentações</h1>
 
+        <div class="flex flex-col">
 
-        <table class="mx-auto w-[900px] border border-gray-400 z-20">
-            <thead class="bg-gray-400">
-                <tr>
-                    <th class="py-2 px-8">Id Movimentação</th>
-                    <th class="py-2 px-8">Tipo</th>
-                    <th class="py-2 px-8">Id Epi</th>
-                    <th class="py-2 px-8">Tipo Epi</th>
-                    <th class="py-2 px-8">Usuário</th>
-                    <th class="py-2 px-8">Data</th>
-                </tr>
-            </thead>
+            <div v-if="isAdmin" class="flex justify-between mx-auto mt-6 mb-8 gap-[210px]">
 
-            <tbody class="bg-gray-200">
-                <tr v-for="mov in movimentacoes" :key="mov.id" class="hover:bg-gray-100">
+                <input v-model="busca" @input="exibirMovimentacoes" type="text"
+                    placeholder="Buscar por usuário..." class="border p-2 rounded w-64" />
 
-                    <td class="py-2 text-center">{{ mov.id }}</td>
-                    <td class="py-2 text-center">{{mov.tipo}}</td>
-                    <td class="py-2 text-center">{{mov.epi_id}}</td>
-                    <td class="py-2 text-center">{{mov.tipo_epi}}</td>
-                    <td class="py-2 px-4 text-center">{{mov.usuario_nome}}</td>
-                    <td class="py-2 text-center">{{mov.data}}</td>
+                <select v-model="filtroTipo" @change="exibirMovimentacoes" class="border p-2 mb-4">
+                    <option value="">Tipo:</option>
+                    <option value="Entrega">Entrega</option>
+                    <option value="Devolucao">Devolução</option>
+                </select>
 
-                </tr>
-            </tbody>
-            
-        </table>
+                <button @click="limparFiltros"
+                    class="px-2 bg-red-700 rounded-lg shadow-lg text-white hover:bg-red-800">Limpar filtros</button>
+            </div>
 
+            <table class="mx-auto w-[900px] border border-gray-400 z-20">
+                <thead class="bg-gray-400">
+                    <tr>
+                        <th class="py-2 px-8">Id Movimentação</th>
+                        <th class="py-2 px-8">Tipo</th>
+                        <th class="py-2 px-8">Id Epi</th>
+                        <th class="py-2 px-8">Tipo Epi</th>
+                        <th class="py-2 px-8">Usuário</th>
+                        <th class="py-2 px-8">Data</th>
+                    </tr>
+                </thead>
+
+                <tbody class="bg-gray-200">
+                    <tr v-for="mov in movimentacoes" :key="mov.id" class="hover:bg-gray-100">
+
+                        <td class="py-2 text-center">{{ mov.id }}</td>
+                        <td class="py-2 text-center">{{ mov.tipo }}</td>
+                        <td class="py-2 text-center">{{ mov.epi_id }}</td>
+                        <td class="py-2 text-center">{{ mov.tipo_epi }}</td>
+                        <td class="py-2 px-4 text-center">{{ mov.usuario_nome }}</td>
+                        <td class="py-2 text-center">{{ mov.data }}</td>
+
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
     </div>
 
 </template>
@@ -48,92 +64,107 @@ const erro = ref('')
 const user = ref(null)
 const router = useRouter()
 const isAdmin = computed(() => user.value?.classe === 'Administrador')
+const filtroTipo = ref('')
+const busca = ref('')
 
 
-async function controleClasses(){
+async function controleClasses() {
 
-    const { data:authData} = await supabase.auth.getUser()
+    const { data: authData } = await supabase.auth.getUser()
 
-    if(!authData?.user){
-      router.push('/Login')
-      return
+    if (!authData?.user) {
+        router.push('/Login')
+        return
     }
 
     const userId = authData.user.id
 
-    const {data: userData, error} = await supabase
-      .from('usuarios')
-      .select('classe')
-      .eq('id', userId)
-      .single()
+    const { data: userData, error } = await supabase
+        .from('usuarios')
+        .select('classe')
+        .eq('id', userId)
+        .single()
 
 
-      if(error){
-         console.error('Erro ao buscar dados do usuário:', error)
-         return
-      }
+    if (error) {
+        console.error('Erro ao buscar dados do usuário:', error)
+        return
+    }
 
-      user.value = userData
+    user.value = userData
 }
 
 
 async function exibirMovimentacoes() {
 
-    const{data: authData, erroAuth} = await supabase.auth.getUser()
+    const { data: authData, erroAuth } = await supabase.auth.getUser()
 
-    if(erroAuth){
+    if (erroAuth) {
         console.log(erroAuth)
         return
     }
 
-    const {data: user, erroUser} = await supabase
-    .from('usuarios')
-    .select('classe')
-    .eq('id', authData.user.id)
-    .single()
+    let query = supabase
+        .from('movimentacoes')
+        .select('*')
+        .order('data', { ascending: false })
 
-    if(erroUser){
+    if (filtroTipo.value) {
+        query = query.eq('tipo', filtroTipo.value)
+    }
+
+    if (busca.value){
+        query = query.ilike('usuario_nome', `%${busca.value}%`)
+    }
+
+    const { data: user, erroUser } = await supabase
+        .from('usuarios')
+        .select('classe')
+        .eq('id', authData.user.id)
+        .single()
+
+    if (erroUser) {
         console.log(erroUser)
         return
     }
 
-    if(user.classe == "Aluno" || user.classe == "Funcionario"){                     //Se for aluno ou funcionário vê apenas as suas movimentações
+    if (user.classe == "Aluno" || user.classe == "Funcionario") {                     //Se for aluno ou funcionário vê apenas as suas movimentações
         const { data, error } = await supabase
-        .from('movimentacoes')
-        .select('*')
-        .eq('usuario_id', authData.user.id)
-        .order('data', { ascending: false })    
+            .from('movimentacoes')
+            .select('*')
+            .eq('usuario_id', authData.user.id)
+            .order('data', { ascending: false })
 
         if (error) {
-        erro.value = error.message
-        console.log(`Error ${erro}`)            //Verificar se tem erro e exibir o erro no console
-    }
+            erro.value = error.message
+            console.log(`Error ${erro}`)            //Verificar se tem erro e exibir o erro no console
+        }
 
-    movimentacoes.value = data   
-        
-    }else{                                                                            //Se for admin ou almoxarife vê todas as movimentações
+        movimentacoes.value = data
 
-        const { data, error } = await supabase
-        .from('movimentacoes')
-        .select('*')
-        .order('data', { ascending: false }) 
+    } else {                                                                            //Se for admin ou almoxarife vê todas as movimentações
+
+        const { data, error } = await query
 
         if (error) {
-        erro.value = error.message
-        console.log(`Error ${erro}`)            //Verificar se tem erro e exibir o erro no console
-    }
+            erro.value = error.message
+            console.log(`Error ${erro}`)            //Verificar se tem erro e exibir o erro no console
+        }
 
-    movimentacoes.value = data     //Se não deu erro, usuários recebe a resposta do supabase
+        movimentacoes.value = data     //Se não deu erro, usuários recebe a resposta do supabase
+    }
 }
-    }
-    
 
+function limparFiltros() {
+    filtroTipo.value = ''
+    exibirMovimentacoes()
+}
 
 
 
 onMounted(() => {
     controleClasses()
-    exibirMovimentacoes()   
+    exibirMovimentacoes()
 })
 
 

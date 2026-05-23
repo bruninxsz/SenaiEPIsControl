@@ -2,7 +2,7 @@
 
     <div class="bg-gray-100 min-h-screen">
     <!--Montando o Header-->
-    <div id="Header" class="sticky top-0 flex justify-between p-6 shadow-md bg-white z-50">
+    <header class="sticky top-0 flex justify-between p-6 shadow-md bg-white z-50">
         <img src="../assets/logo.png" alt="Logo Senai Epi Control" class="w-40 hover:scale-105"> <!--LOGO-->
     
     <div class="flex justify-between gap-16">
@@ -21,7 +21,7 @@
             </button>
         </router-link>
     </div>
-    </div>
+    </header>
 
 
     
@@ -31,8 +31,7 @@
         <div class="flex flex-col space-y-5 text-right">
             <h1 class="text-5xl text-right font-medium">Sistema de Controle de EPIs <br> para Instituições de Ensino</h1>
 
-            <p id="Funcionalidades" class="text-gray-600 text-xl text-right"> Gerencie entregas, validade e rastreabilidade de equipamentos
-                de proteção
+            <p id="Funcionalidades" class="text-gray-600 text-xl text-right"> Gerencie entregas, validade e rastreabilidade de equipamentos de proteção
                 individual de forma simples e eficiente</p><br>
 
             <router-link to='Login'>

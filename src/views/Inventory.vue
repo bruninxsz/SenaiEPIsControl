@@ -10,14 +10,14 @@
         <div class="flex flex-col">
             <div v-if="isAdmin || isAlmoxarife" class="flex justify-between mx-auto mb-12 gap-8">
                 <select v-model="filtroStatus" @change="exibirEstoque" class="border p-2">
-                    <option value="">Todos</option>
+                    <option value="">Status:</option>
                     <option value="Disponível">Disponível</option>
                     <option value="Emprestado">Emprestado</option>
                     <option value="Vencido">Vencido</option>
                 </select>
 
                 <select id="tipo" v-model="filtroTipo" @change="exibirEstoque" class="border p-2">
-                    <option value="">Todos</option>
+                    <option value="">Tipo:</option>
                     <option value="Capacete">Capacete</option>
                     <option value="OculosSeguranca">Óculos de Segurança</option>
                     <option value="OculosSolda">Óculos de Solda</option>
@@ -58,7 +58,7 @@
                         <th class="p-2">Id Epi</th>
                         <th class="p-2">Tipo Epi</th>
                         <th class="p-2">Vencimento</th>
-                        <th class="p-2">Status</th>
+                        <th v-if="isAdmin || isAlmoxarife" class="p-2">Status</th>
                         <th v-if="isAdmin || isAlmoxarife" class="p-2">Deletar</th>
                     </tr>
                 </thead>
@@ -68,7 +68,7 @@
                         <td class="p-2 text-center">{{ tipo_epi.id_epi }}</td>
                         <td class="p-2 text-center">{{ tipo_epi.tipo_epi }}</td>
                         <td class="p-2 text-center">{{ tipo_epi.vencimento }}</td>
-                        <td class="p-2 text-center">{{ tipo_epi.status }}</td>
+                        <td v-if="isAdmin || isAlmoxarife" class="p-2 text-center">{{ tipo_epi.status }}</td>
                         <td v-if="isAdmin || isAlmoxarife" class="p-2">
                             <button @click="deletarEpi(tipo_epi.id_epi)">
                                 <img src="../assets/Users/lixo.png" class="py-2 w-[3vh] mx-auto" />
