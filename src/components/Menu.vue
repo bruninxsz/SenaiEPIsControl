@@ -4,8 +4,6 @@
 
         <router-link v-if ="isAdmin || isAlmoxarife" to="/Dashboard/Users" class="mt-8 hover:font-bold">Usuários</router-link>
 
-        <router-link v-else to="/Dashboard/Users" class="mt-8 hover:font-bold">Seu cadastro</router-link>
-
         <router-link v-if="isAdmin || isAlmoxarife" to="/Dashboard/Inventory" class="mt-8 hover:font-bold">Estoque</router-link>
 
         <router-link v-else to="/Dashboard/Inventory" class="mt-8 hover:font-bold">Epis disponíveis</router-link>

@@ -4,12 +4,13 @@
         <h1 v-else class="mx-auto text-center font-bold text-gray-600 p-16">Suas Movimentações</h1>
 
 
-        <table class="mx-auto w-[600px] border border-gray-400 z-20">
+        <table class="mx-auto w-[900px] border border-gray-400 z-20">
             <thead class="bg-gray-400">
                 <tr>
-                    <th class="py-2 px-8">Id</th>
+                    <th class="py-2 px-8">Id Movimentação</th>
                     <th class="py-2 px-8">Tipo</th>
-                    <th class="py-2 px-8">Epi_id</th>
+                    <th class="py-2 px-8">Id Epi</th>
+                    <th class="py-2 px-8">Tipo Epi</th>
                     <th class="py-2 px-8">Usuário</th>
                     <th class="py-2 px-8">Data</th>
                 </tr>
@@ -21,6 +22,7 @@
                     <td class="py-2 text-center">{{ mov.id }}</td>
                     <td class="py-2 text-center">{{mov.tipo}}</td>
                     <td class="py-2 text-center">{{mov.epi_id}}</td>
+                    <td class="py-2 text-center">{{mov.tipo_epi}}</td>
                     <td class="py-2 px-4 text-center">{{mov.usuario_nome}}</td>
                     <td class="py-2 text-center">{{mov.data}}</td>
 

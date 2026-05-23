@@ -2,8 +2,6 @@
     <div class="bg-gray-100">
         <h1 v-if="isAdmin || isAlmoxarife" class="mx-auto text-center font-bold mt-4 text-gray-600 p-16">Usuários
             Cadastrados</h1>
-        <h1 v-if="isFuncionario || isAluno" class="mx-auto text-center font-bold mt-4 text-gray-600 p-16">Seus dados
-        </h1>
 
         <div class="flex flex-col">
 
