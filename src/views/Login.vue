@@ -8,18 +8,18 @@
           <img src="../assets/senai.svg" alt="Logo do SENAI" class="w-32 hover:scale-[1.01]">
       </div>
   
-      <form @submit.prevent="fazerLogin" class="flex flex-col bg-gray-300 p-10 shadow-xl max-w-3xl mx-auto rounded-xl mt-32">
+      <form @submit.prevent="fazerLogin" class="flex flex-col bg-gray-300 p-10 shadow-xl max-w-3xl mx-auto rounded-xl mt-48">
   
           <div class="text-black font-medium text-center text-2xl">Faça seu Login</div>
   
           <div class="flex items-center mx-auto mt-16">
               <label for="email">Digite o seu email:</label>
-              <input type="email" id="email" v-model="email" class="ml-3 px-4 py-3 shadow-md bg-white w-96 rounded-xl text-black text-md"></input>
+              <input placeholder="exemplo@senai.edu.br" type="email" id="email" v-model="email" class="ml-3 px-4 py-3 shadow-md bg-white w-96 rounded-xl text-black text-md"></input>
           </div>
   
           <div class="flex items-center mx-auto mt-8">
               <label for="senha">Digite a sua senha:</label>
-              <input type="password" id="senha" v-model="senha" class="ml-3 px-4 py-3 shadow-md bg-white w-96 rounded-xl text-black text-md"></input>
+              <input placeholder="**********" type="password" id="senha" v-model="senha" class="ml-3 px-4 py-3 shadow-md bg-white w-96 rounded-xl text-black text-md"></input>
           </div>
   
           <button type="submit" class="botao-entrar mx-auto bg-red-700 py-3 w-64 text-white font-bold rounded-md mt-16 hover:bg-red-800 hover:scale-[1.01]" :disabled="carregando">
