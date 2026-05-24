@@ -7,8 +7,8 @@
 
             <div v-if="isAdmin" class="flex justify-between mx-auto mt-6 mb-8 gap-[210px]">
 
-                <input v-model="busca" @input="exibirMovimentacoes" type="text"
-                    placeholder="Buscar por usuário..." class="border p-2 rounded w-64" />
+                <input v-model="busca" @input="exibirMovimentacoes" type="text" placeholder="Buscar por usuário..."
+                    class="border p-2 rounded w-64" />
 
                 <select v-model="filtroTipo" @change="exibirMovimentacoes" class="border p-2 mb-4">
                     <option value="">Tipo:</option>
@@ -33,8 +33,7 @@
                 </thead>
 
                 <tbody class="bg-gray-200">
-                    <tr v-for="mov in movimentacoes" :key="mov.id" class="hover:bg-gray-100">
-
+                    <tr v-for="(mov, index) in movimentacoes" :key="mov.id + '-' + index">
                         <td class="py-2 text-center">{{ mov.id }}</td>
                         <td class="py-2 text-center">{{ mov.tipo }}</td>
                         <td class="py-2 text-center">{{ mov.epi_id }}</td>
@@ -113,7 +112,7 @@ async function exibirMovimentacoes() {
         query = query.eq('tipo', filtroTipo.value)
     }
 
-    if (busca.value){
+    if (busca.value) {
         query = query.ilike('usuario_nome', `%${busca.value}%`)
     }
 

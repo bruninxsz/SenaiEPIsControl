@@ -1,54 +1,62 @@
 <template>
     <div class="bg-gray-100">
-        <h1 v-if="isAdmin || isAlmoxarife" class="mx-auto text-center font-bold mt-4 text-gray-600 p-16">Usuários Cadastrados</h1>
+        <h1 v-if="isAdmin || isAlmoxarife" class="mx-auto text-center font-bold mt-4 text-gray-600 p-16">Usuários
+            Cadastrados</h1>
 
         <div class="flex flex-col">
 
-        <div v-if="isAdmin" class="flex justify-between mx-auto mb-8 gap-[550px]">
-        <select v-model="filtroClasse" @change="exibirUsuarios" class="border p-2 mb-4">
-            <option value="">Classe:</option>
-            <option value="Administrador">Administrador</option>
-            <option value="Almoxarife">Almoxarife</option>
-            <option value="Aluno">Aluno</option>
-            <option value="Funcionario">Funcionário</option>
-        </select>
+            <div v-if="isAdmin" class="flex justify-between mx-auto mb-8 gap-[150px]">
 
-        <button @click="limparFiltros" class="px-2 bg-red-700 rounded-lg shadow-lg text-white hover:bg-red-800">Limpar filtros</button>
+                <input v-model="busca" @input="exibirUsuarios" type="text" placeholder="Buscar por usuário..."
+                    class="border p-2 rounded w-64" />
+
+                <select v-model="filtroClasse" @change="exibirUsuarios" class="border p-2 mb-4">
+                    <option value="">Classe:</option>
+                    <option value="Administrador">Administrador</option>
+                    <option value="Almoxarife">Almoxarife</option>
+                    <option value="Aluno">Aluno</option>
+                    <option value="Funcionario">Funcionário</option>
+                </select>
+
+                <button @click="limparFiltros"
+                    class="px-2 bg-red-700 rounded-lg shadow-lg text-white hover:bg-red-800">Limpar filtros</button>
+            </div>
+            <table class="mx-auto w-[800px] border border-gray-400 z-20">
+                <thead class="bg-gray-400">
+                    <tr>
+                        <th class="p-2">ID</th>
+                        <th class="p-2">Nome</th>
+                        <th class="p-2">Email</th>
+                        <th class="p-2">Classe</th>
+                        <th v-if="isAdmin" class="p-2">Editar Usuário</th>
+                        <th v-if="isAdmin" class="p-2">Deletar Usuário</th>
+                    </tr>
+                </thead>
+
+                <tbody class="bg-gray-200">
+                    <tr v-for="user in usuarios" :key="user.id" class="hover:bg-gray-100">
+
+                        <td class="p-2">{{ user.id }}</td>
+                        <td class="p-2">{{ user.nome_usuario }}</td>
+                        <td class="p-2">{{ user.email }}</td>
+                        <td class="p-2">{{ user.classe }}</td>
+                        <td v-if="isAdmin" class="p-2">
+                            <button @click="abrirModal(user)" class="">
+                                <img src="../assets/Users/editar.png" class="p-2 w-[40%] mx-auto">
+                            </button>
+                        </td>
+                        <td v-if="isAdmin" class="p-2">
+                            <button @click="deletarUsuario(user.id)" class="">
+                                <img src="../assets/Users/lixo.png" class="p-2 w-[40%] mx-auto">
+                            </button>
+                        </td>
+
+                    </tr>
+                </tbody>
+
+            </table>
         </div>
-        <table class="mx-auto w-[800px] border border-gray-400 z-20">
-            <thead class="bg-gray-400">
-                <tr>
-                    <th class="p-2">ID</th>
-                    <th class="p-2">Email</th>
-                    <th class="p-2">Classe</th>
-                    <th v-if="isAdmin" class="p-2">Editar Usuário</th>
-                    <th v-if="isAdmin" class="p-2">Deletar Usuário</th>
-                </tr>
-            </thead>
 
-            <tbody class="bg-gray-200">
-                <tr v-for="user in usuarios" :key="user.id" class="hover:bg-gray-100">
-
-                    <td class="p-2">{{ user.id }}</td>
-                    <td class="p-2">{{ user.email }}</td>
-                    <td class="p-2">{{ user.classe }}</td>
-                    <td v-if="isAdmin" class="p-2">
-                        <button @click="abrirModal(user)" class="">
-                            <img src="../assets/Users/editar.png" class="p-2 w-[30%] mx-auto">
-                        </button>
-                    </td>
-                    <td v-if="isAdmin" class="p-2">
-                        <button @click="deletarUsuario(user.id)" class="">
-                            <img src="../assets/Users/lixo.png" class="p-2 w-[30%] mx-auto">
-                        </button>
-                    </td>
-
-                </tr>
-            </tbody>
-
-        </table>
-        </div>
- 
         <!--Exibir modal para atualizar informações dos usuários-->
 
         <div v-if="showCadastroModal" class="modal-overlay" @click.stop>
@@ -118,6 +126,7 @@ const toast = useToast()
 const user = ref(null)
 const filtroClasse = ref('')
 const router = useRouter()
+const busca = ref('')
 
 async function controleClasses() {
 
@@ -149,11 +158,15 @@ async function controleClasses() {
 async function exibirUsuarios() {
 
     let query = supabase
-    .from('usuarios')
-    .select('*')
+        .from('usuarios')
+        .select('*')
 
-    if(filtroClasse.value){
+    if (filtroClasse.value) {
         query = query.eq('classe', filtroClasse.value)
+    }
+
+    if (busca.value) { 
+        query = query.ilike('nome_usuario', `%${busca.value}%`)
     }
 
     const { data, error } = await query
