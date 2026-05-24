@@ -25,10 +25,11 @@
                     <tr>
                         <th class="py-3 px-8">Id Movimentação</th>
                         <th class="px-8">Tipo</th>
+                        <th class="px-8">Id Epi</th>
                         <th class="px-8">Tipo Epi</th>
                         <th class="px-8">Usuário</th>
                         <th class="px-8">Data</th>
-                        <th class="px-8">Id Epi</th>
+                        
                     </tr>
                 </thead>
 
