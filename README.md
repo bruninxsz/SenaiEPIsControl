@@ -24,4 +24,3 @@ npm run dev
 ## 🔗 Deploy
 https://senai-epi-control.vercel.app/
 
-Projeto em desenvolvimento...
