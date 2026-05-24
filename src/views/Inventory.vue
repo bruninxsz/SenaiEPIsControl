@@ -8,7 +8,7 @@
         </h1>
 
         <div class="flex flex-col">
-            <div v-if="isAdmin || isAlmoxarife" class="flex justify-between mx-auto mb-12 gap-8">
+            <div v-if="isAdmin || isAlmoxarife" class="flex justify-between mx-auto mt-12 mb-6 gap-[70px]">
                 <select v-model="filtroStatus" @change="exibirEstoque" class="border p-2">
                     <option value="">Status:</option>
                     <option value="Disponível">Disponível</option>
@@ -52,24 +52,24 @@
                 </button>
             </div>
 
-            <table class="mx-auto w-[600px] border border-gray-400 z-20">
-                <thead class="bg-gray-400">
+            <table class="mx-auto w-[700px] border border-slate-400 z-20 shadow-lg mt-4">
+                <thead class="bg-gray-700 text-white">
                     <tr>
-                        <th class="p-2">Id Epi</th>
-                        <th class="p-2">Tipo Epi</th>
-                        <th class="p-2">Vencimento</th>
-                        <th v-if="isAdmin || isAlmoxarife" class="p-2">Status</th>
-                        <th v-if="isAdmin || isAlmoxarife" class="p-2">Deletar</th>
+                        <th class="p-3">Id Epi</th>
+                        <th class="p-3">Tipo Epi</th>
+                        <th class="p-3">Vencimento</th>
+                        <th v-if="isAdmin || isAlmoxarife" class="p-3">Status</th>
+                        <th v-if="isAdmin || isAlmoxarife" class="p-3">Deletar</th>
                     </tr>
                 </thead>
 
                 <tbody class="bg-gray-200">
                     <tr v-for="tipo_epi in epi" :key="tipo_epi.id" class="hover:bg-gray-100 items text-center">
-                        <td class="p-2 text-center">{{ tipo_epi.id_epi }}</td>
-                        <td class="p-2 text-center">{{ tipo_epi.tipo_epi }}</td>
-                        <td class="p-2 text-center">{{ tipo_epi.vencimento }}</td>
-                        <td v-if="isAdmin || isAlmoxarife" class="p-2 text-center">{{ tipo_epi.status }}</td>
-                        <td v-if="isAdmin || isAlmoxarife" class="p-2">
+                        <td class="p-3 text-center">{{ tipo_epi.id_epi }}</td>
+                        <td class="p-3 text-center">{{ tipo_epi.tipo_epi }}</td>
+                        <td class="p-3 text-center">{{ tipo_epi.vencimento }}</td>
+                        <td v-if="isAdmin || isAlmoxarife" class="p-3 text-center">{{ tipo_epi.status }}</td>
+                        <td v-if="isAdmin || isAlmoxarife" class="p-3">
                             <button @click="deletarEpi(tipo_epi.id_epi)">
                                 <img src="../assets/Users/lixo.png" class="py-2 w-[3vh] mx-auto" />
                             </button>

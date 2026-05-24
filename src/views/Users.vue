@@ -5,7 +5,7 @@
 
         <div class="flex flex-col">
 
-            <div v-if="isAdmin" class="flex justify-between mx-auto mb-8 gap-[150px]">
+            <div v-if="isAdmin" class="flex justify-between mx-auto mb-8 gap-[200px] mt-8">
 
                 <input v-model="busca" @input="exibirUsuarios" type="text" placeholder="Buscar por usuário..."
                     class="border p-2 rounded w-64" />
@@ -19,35 +19,34 @@
                 </select>
 
                 <button @click="limparFiltros"
-                    class="px-2 bg-red-700 rounded-lg shadow-lg text-white hover:bg-red-800">Limpar filtros</button>
+                    class="px-2 bg-red-700 rounded-lg shadow-lg mt- text-white hover:bg-red-800">Limpar filtros</button>
             </div>
-            <table class="mx-auto w-[800px] border border-gray-400 z-20">
-                <thead class="bg-gray-400">
+            <table class="mx-auto w-full max-w-[900px] border border-slate-400 z-20 shadow-lg mt-4">
+                <thead class="bg-gray-700 text-white">
                     <tr>
-                        <th class="p-2">ID</th>
-                        <th class="p-2">Nome</th>
-                        <th class="p-2">Email</th>
-                        <th class="p-2">Classe</th>
+                        <th class="p-3">ID</th>
+                        <th class="p-3">Nome</th>
+                        <th class="p-3">Email</th>
+                        <th class="p-3">Classe</th>
                         <th v-if="isAdmin" class="p-2">Editar Usuário</th>
                         <th v-if="isAdmin" class="p-2">Deletar Usuário</th>
                     </tr>
                 </thead>
 
-                <tbody class="bg-gray-200">
-                    <tr v-for="user in usuarios" :key="user.id" class="hover:bg-gray-100">
-
-                        <td class="p-2">{{ user.id }}</td>
-                        <td class="p-2">{{ user.nome_usuario }}</td>
-                        <td class="p-2">{{ user.email }}</td>
-                        <td class="p-2">{{ user.classe }}</td>
+                <tbody class="bg-gray-200 ">
+                    <tr v-for="(user, index) in usuarios" :key="user.id + '-' + index" class="hover:bg-gray-100 text-center">
+                        <td class="p-3">{{ user.id }}</td>
+                        <td class="p-3">{{ user.nome_usuario }}</td>
+                        <td class="p-3">{{ user.email }}</td>
+                        <td class="p-3">{{ user.classe }}</td>
                         <td v-if="isAdmin" class="p-2">
                             <button @click="abrirModal(user)" class="">
-                                <img src="../assets/Users/editar.png" class="p-2 w-[40%] mx-auto">
+                                <img src="../assets/Users/editar.png" class="p-2 w-[30%] hover:scale-[1.05] mx-auto">
                             </button>
                         </td>
                         <td v-if="isAdmin" class="p-2">
                             <button @click="deletarUsuario(user.id)" class="">
-                                <img src="../assets/Users/lixo.png" class="p-2 w-[40%] mx-auto">
+                                <img src="../assets/Users/lixo.png" class="p-2 w-[30%] hover:scale-[1.05] mx-auto">
                             </button>
                         </td>
 

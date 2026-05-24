@@ -1,6 +1,6 @@
 <template>
 
-     <aside class="flex flex-col bg-gray-500 px-4 text-white w-[200px] min-h-screen sticky bottom-0 top-0 text-left">
+     <aside class="flex flex-col bg-gray-700 px-4 text-white w-[200px] min-h-screen sticky bottom-0 top-0 text-left">
 
         <router-link v-if ="isAdmin || isAlmoxarife" to="/Dashboard/Users" class="mt-8 hover:font-bold">Usuários</router-link>
 
