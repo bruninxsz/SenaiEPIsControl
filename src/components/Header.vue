@@ -9,7 +9,7 @@
         </button>
       </div>
 
-      <div v-if="mostrarModal" class="absolute right-0 mt-16 bg-gray-100 shadow-2xl rounded-lg px-6 py-3 z-50">
+      <div v-if="mostrarModal" class="absolute right-2 mt-16 bg-gray-100 shadow-2xl rounded-lg px-6 py-3 z-50">
 
         <button @click="Sair" class="block w-full text-sm text-left px-2 py-1 rounded">
           Sair da Conta

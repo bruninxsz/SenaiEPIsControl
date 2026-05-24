@@ -58,37 +58,44 @@
 
         <!--Exibir modal para atualizar informações dos usuários-->
 
-        <div v-if="showCadastroModal" class="modal-overlay" @click.stop>
+       <div v-if="showCadastroModal"
+    class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
 
-            <div
-                class="fixed inset-0 max-h-[550px] my-auto flex flex-col bg-black/40 backdrop-blur-xl p-10 shadow-xl max-w-3xl mx-auto rounded-xl z-50">
+    <div class="bg-gray-100 w-[90%] max-w-md rounded-2xl shadow-2xl p-6 relative">
 
-                <button class="text-red-600 font-bold text-right text-4xl" @click="showCadastroModal = false">X</button>
-                <div class="text-white font-medium text-center text-2xl">Atualizar Usuário</div>
+        <button @click="fecharModal"
+            class="absolute top-3 right-4 text-gray-500 hover:text-red-600 text-xl font-bold">
+            ✕
+        </button>
 
-                <div class="flex items-center mx-auto mt-16">
-                    <label for="email" class="text-white">Digite o email:</label>
-                    <input type="email" id="email" v-model="email"
-                        class="ml-3 px-4 py-3 shadow-md bg-white w-96 rounded-xl text-black text-md"></input>
-                </div>
+        <h2 class="text-xl font-bold text-center text-gray-700 mb-6">
+            Atualizar Usuário
+        </h2>
 
-                <div class="flex items-center mx-auto mt-8">
-                    <label for="classe" class="text-white">Classe usuário:</label>
-                    <select id="classe" v-model="classe"
-                        class="ml-3 px-4 py-3 shadow-md bg-white w-96 text-black text-md">
+        <div class="flex flex-col mb-4">
+            <label class="text-gray-600 mb-1">Email</label>
+            <input type="email" v-model="email"
+                class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 w-full">
+        </div>
 
-                        <option value="" disabled>Selecione uma opção</option>
-                        <option value="Administrador">Administrador</option>
-                        <option value="Funcionario">Funcionário</option>
-                        <option value="Aluno">Aluno</option>
+        <div class="flex flex-col mb-6">
+            <label class="text-gray-600 mb-1">Classe</label>
+            <select v-model="classe"
+                class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 w-full">
+                <option value="" disabled>Selecione uma opção</option>
+                <option value="Administrador">Administrador</option>
+                <option value="Funcionario">Funcionário</option>
+                <option value="Aluno">Aluno</option>
+            </select>
+        </div>
 
-                    </select>
-                </div>
+        <button @click="atualizarUsuario"
+            class="w-full bg-red-700 text-white py-2 rounded-lg font-semibold hover:bg-red-800 transition">
+            Atualizar
+        </button>
 
-                <button type="submit" @click="atualizarUsuario()"
-                    class="botao-cadastro mx-auto bg-red-700 py-3 w-64 text-white font-bold rounded-md mt-16 hover:bg-red-800 hover:scale-[1.01]"
-                    :disabled="carregando">Atualizar</button>
-            </div>
+    </div>
+
 
 
 

@@ -13,19 +13,19 @@
 
                     <div class="text-black font-medium text-center text-2xl">Novo Usuário</div>
 
-                    <div class="flex justify-between items-center mt-16">
+                    <div class="flex justify-between mt-16">
                         <label for="nome">Digite o nome:</label>
                         <input id="nome" v-model="nome"
                             class="ml-3 px-4 py-3 shadow-md bg-white w-96 rounded-xl text-black text-md"></input>
                     </div>
 
-                    <div class="flex justify-between items-center mt-8">
+                    <div class="flex justify-between mt-8">
                         <label for="email">Digite o email:</label>
                         <input type="email" id="email" v-model="email"
                             class="ml-3 px-4 py-3 shadow-md bg-white w-96 rounded-xl text-black text-md"></input>
                     </div>
 
-                    <div class="flex justify-between items-center mt-8">
+                    <div class="flex justify-between mt-8">
                         <label for="senha">Digite a senha:</label>
                         <input type="password" v-model="senha"
                             class="ml-3 px-4 py-3 shadow-md bg-white w-96 rounded-xl text-black text-md"></input>

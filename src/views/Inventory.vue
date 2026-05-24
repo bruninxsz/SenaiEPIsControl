@@ -8,7 +8,7 @@
         </h1>
 
         <div class="flex flex-col">
-            <div v-if="isAdmin || isAlmoxarife" class="flex justify-between mx-auto mt-12 mb-6 gap-[70px]">
+            <div v-if="isAdmin || isAlmoxarife" class="flex justify-between mx-auto mt-12 mb-6 gap-[75px]">
                 <select v-model="filtroStatus" @change="exibirEstoque" class="border p-2">
                     <option value="">Status:</option>
                     <option value="Disponível">Disponível</option>
