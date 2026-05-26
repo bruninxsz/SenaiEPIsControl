@@ -10,7 +10,7 @@
             <div class="mt-6">
 
                 <form @submit.prevent="realizarDevolucao"
-                    class="flex flex-col bg-gray-300 p-10 shadow-xl max-w-3xl mx-auto rounded-xl mt-16">
+                    class="flex flex-col bg-gray-300 p-14 shadow-xl max-w-3xl mx-auto rounded-xl mt-16">
 
                     <div class="text-black font-medium text-center text-2xl">Registrar Devolução</div>
 

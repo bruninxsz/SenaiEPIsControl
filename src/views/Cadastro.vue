@@ -9,7 +9,7 @@
 
             <div class="mt-6">
                 <form @submit.prevent="novoUsuario"
-                    class="flex flex-col bg-gray-300 py-10 px-16 shadow-xl max-w-3xl mx-auto rounded-xl mt-16">
+                    class="flex flex-col bg-gray-300 py-10 px-20 shadow-xl max-w-3xl mx-auto rounded-xl mt-16">
 
                     <div class="text-black font-medium text-center text-2xl">Novo Usuário</div>
 

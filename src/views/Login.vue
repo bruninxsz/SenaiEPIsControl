@@ -59,7 +59,7 @@
     // Validação básica
     if (!email.value || !senha.value) {
       erro.value = 'Por favor, preencha todos os campos'
-      toast.erro(erro.value)
+      toast.warning(erro.value)
       return
     }
   
