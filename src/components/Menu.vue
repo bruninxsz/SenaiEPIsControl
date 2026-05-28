@@ -8,11 +8,11 @@
 
         <router-link v-else to="/Dashboard/Inventory" class="mt-8 hover:font-bold">Epis disponíveis</router-link>
 
-        <router-link v-if="isAdmin" to="/Dashboard/Cadastro" class="mt-8 hover:font-bold">Cadastro</router-link>
-
         <router-link v-if="isAdmin || isAlmoxarife" to="/Dashboard/Activities" class="mt-8 hover:font-bold">Movimentações</router-link>
 
         <router-link v-else to="/Dashboard/Activities" class="mt-8 hover:font-bold">Suas movimentações</router-link>
+
+        <router-link v-if="isAdmin" to="/Dashboard/Cadastro" class="mt-8 hover:font-bold">Cadastro</router-link>
 
         <router-link v-if="isAdmin || isAlmoxarife" to="/Dashboard/EPIRegister" class="mt-8 hover:font-bold">Cadastrar EPI</router-link>
 

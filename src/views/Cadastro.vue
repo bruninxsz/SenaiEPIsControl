@@ -9,7 +9,7 @@
 
             <div class="mt-6">
                 <form @submit.prevent="novoUsuario"
-                    class="flex flex-col bg-gray-300 py-10 px-16 shadow-xl max-w-3xl mx-auto rounded-xl mt-16">
+                    class="flex flex-col bg-gray-300 py-10 px-20 shadow-xl max-w-3xl mx-auto rounded-xl mt-16">
 
                     <div class="text-black font-medium text-center text-2xl">Novo Usuário</div>
 
@@ -101,15 +101,22 @@ async function novoUsuario() {
         return
     }
 
+    if (senha.value !== confSenha.value) {
+            toast.warning('As senhas não coincidem!')
+            return                                      //Verificando se as senhas digitadas são iguais
+    }
+
+    if(senha.value.length < 6){
+        toast.warning('A senha deve possuir 6 dígitos ou mais')
+        return
+    }
+
+
     carregando.value = true
 
     try {
 
-        if (senha.value !== confSenha.value) {
-            toast.warning('As senhas não coincidem!')
-            return                                      //Verificando se as senhas digitadas são iguais
-        }
-
+        
         const { data: sessionData } = await supabase.auth.getSession()          //Guardando a sessão para voltar ao admin depois
         const adminSession = sessionData.session
 

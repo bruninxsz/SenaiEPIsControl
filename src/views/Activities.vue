@@ -20,7 +20,7 @@
                     class="px-2 bg-red-700 rounded-lg shadow-lg text-white hover:bg-red-800">Limpar filtros</button>
             </div>
 
-            <table class="mx-auto w-[1000px] border border-gray-400 z-20 rounded-md shadow-lg mt-4">
+            <table class="mx-auto w-[1100px] border border-gray-400 z-20 rounded-md shadow-lg mt-4 mb-16">
                 <thead class="bg-gray-700 text-white">
                     <tr>
                         <th class="py-3 px-8">Id Movimentação</th>
@@ -29,23 +29,27 @@
                         <th class="px-8">Tipo Epi</th>
                         <th class="px-8">Usuário</th>
                         <th class="px-8">Data</th>
+                        <th class="px-8">Observações</th>
                         
                     </tr>
                 </thead>
 
                 <tbody class="bg-gray-200">
-                    <tr v-for="(mov, index) in movimentacoes" :key="mov.id + '-' + index" class="text-center">
+                    <!--Index para evitar bugs de exibição (Cria um id para cada linha da tabela)-->
+                    <tr v-for="(mov, index) in movimentacoes" :key="mov.id + '-' + index" class="text-center">   
                         <td class="py-3 text-center">{{ mov.id }}</td>
                         <td class="text-center">{{ mov.tipo }}</td>
                         <td class="text-center">{{ mov.epi_id }}</td>
                         <td class="text-center">{{ mov.tipo_epi }}</td>
                         <td class="px-6 text-center">{{ mov.usuario_nome }}</td>
                         <td class="text-center">{{ mov.data }}</td>
+                        <td class="text-center">{{ mov.observacoes }}</td>
 
                     </tr>
                 </tbody>
 
             </table>
+
         </div>
     </div>
 
