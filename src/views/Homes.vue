@@ -111,7 +111,7 @@
         <div class="flex flex-col space-y-6 p-10 shadow-xl rounded-xl  w-[900px] hover:scale-[1.01]">
 
             <div><img src="../assets/Home/analytics.svg" alt="Gráfico de barras vermelho" class="w-16 p-2 bg-red-100 rounded-xl"></div>
-            <div class="text-xl text-black text-left font-medium">Relatórios Detalhados</div>
+            <div class="text-xl text-black text-left font-medium">Dados Detalhados</div>
             <p class="text-md text-gray-700 text-left">Gere informações completas sobre uso, validade e histórico de EPIs com poucos cliques.</p>
 
         </div>

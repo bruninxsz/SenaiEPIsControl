@@ -101,15 +101,22 @@ async function novoUsuario() {
         return
     }
 
+    if (senha.value !== confSenha.value) {
+            toast.warning('As senhas não coincidem!')
+            return                                      //Verificando se as senhas digitadas são iguais
+    }
+
+    if(senha.value.length < 6){
+        toast.warning('A senha deve possuir 6 dígitos ou mais')
+        return
+    }
+
+
     carregando.value = true
 
     try {
 
-        if (senha.value !== confSenha.value) {
-            toast.warning('As senhas não coincidem!')
-            return                                      //Verificando se as senhas digitadas são iguais
-        }
-
+        
         const { data: sessionData } = await supabase.auth.getSession()          //Guardando a sessão para voltar ao admin depois
         const adminSession = sessionData.session
 
