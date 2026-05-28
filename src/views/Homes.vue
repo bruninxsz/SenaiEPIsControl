@@ -75,7 +75,7 @@
             <div class="flex flex-col space-y-5 items-center">
                 <div><img src="../assets/Home/rastreability.svg" alt="Corrente e lupa" class="w-[110px] h-auto"></div>
                 <div class="text-red-600 text-xl font-bold">Rastreabilidade Completa</div>
-                <p class="text-gray-600 text-xl max-w-sm">Tenha acesso ao histórico completo de cada EPI: quem recebeu, quando e em qual condição.</p>
+                <p class="text-gray-600 text-xl max-w-sm">Tenha acesso ao histórico completo de cada EPI: quem recebeu ou devolveu, quando e em qual condição.</p>
 
             </div>
         </div>
@@ -111,8 +111,8 @@
         <div class="flex flex-col space-y-6 p-10 shadow-xl rounded-xl  w-[900px] hover:scale-[1.01]">
 
             <div><img src="../assets/Home/analytics.svg" alt="Gráfico de barras vermelho" class="w-16 p-2 bg-red-100 rounded-xl"></div>
-            <div class="text-xl text-black text-left font-medium">Relatórios Detalhados</div>
-            <p class="text-md text-gray-700 text-left">Gere relatórios completos sobre uso, validade e histórico de EPIs com poucos cliques.</p>
+            <div class="text-xl text-black text-left font-medium">Dados Detalhados</div>
+            <p class="text-md text-gray-700 text-left">Gere informações completas sobre uso, validade e histórico de EPIs com poucos cliques.</p>
 
         </div>
 
@@ -120,7 +120,7 @@
 
             <div><img src="../assets/Home/client.svg" alt="Procura de um perfil vermelho" class="w-16 p-2 bg-red-100 rounded-xl"></div>
             <div class="text-xl text-black text-left font-medium">Gestão de usuários</div>
-            <p class="text-md text-gray-700 text-left">Controle a entrega de EPIs por aluno ou funcionário, conforme turma ou setor de forma organizada e centralizada.</p>
+            <p class="text-md text-gray-700 text-left">Controle a entrega de EPIs por aluno ou funcionário, com busca de forma organizada e centralizada.</p>
 
         </div>
 
